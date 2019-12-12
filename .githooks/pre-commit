@@ -1,0 +1,35 @@
+#!/bin/sh
+
+if ! which swiftlint >/dev/null; then
+	echo "ERROR: SwiftLint does not exist, download it from https://github.com/realm/SwiftLint"
+	exit 1
+fi
+
+FILES=$(git diff --staged --name-only)
+FAILS=0
+
+for f in $FILES; do
+	if [[ $f == *".swift" ]]; then
+		COUNT=$(cat $f | grep "\/\/ swiftlint:disable all" | wc -l)
+	
+		if [ $COUNT -gt 0 ]; then
+			printf "ERROR: SwiftLint disabled in file: $f\n"
+			((FAILS++))
+		fi
+
+		RESULT=$(swiftlint --quiet --path $f)
+		
+		if ! [ "$RESULT" == '' ]; then
+			while read -r line; do
+				MESSAGE=$(echo $line | cut -d : -f 2-)
+				printf "SwiftLint: $f:$MESSAGE\n"
+				((FAILS++))
+			done <<< "$RESULT"
+		fi 	
+	fi
+done
+
+if [ $FAILS -gt 0 ]; then
+	printf "COMMIT ABORTED!\nTOTAL ERRORS COUNT: $FAILS\n"
+	exit 1
+fi
