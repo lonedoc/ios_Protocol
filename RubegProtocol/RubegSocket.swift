@@ -9,7 +9,7 @@
 import Foundation
 import Socket
 
-class RubegSocket {
+public class RubegSocket {
     private let packetSize = 962
     private let connectionDropInterval = 20_000
     private let syncInterval = 3000
@@ -37,12 +37,12 @@ class RubegSocket {
     private var stringCallbacks = SynchronizedArray<CallbackContainer<String?>>()
     private var binaryCallbacks = SynchronizedArray<CallbackContainer<[Byte]?>>()
 
-    init() throws {
+    public init() throws {
         socket = try Socket.create(family: .inet, type: .datagram, proto: .udp)
         try socket.setBlocking(mode: false)
     }
 
-    func open() {
+    public func open() {
         if started {
             return
         }
@@ -54,19 +54,19 @@ class RubegSocket {
         }
     }
 
-    func close() {
+    public func close() {
         started = false
     }
 
-    func read(timeout: Int, callback: @escaping (String?) -> Void) {
+    public func read(timeout: Int, callback: @escaping (String?) -> Void) {
         stringCallbacks.append((.now() + .seconds(timeout), callback))
     }
 
-    func read(timeout: Int, callback: @escaping ([Byte]?) -> Void) {
+    public func read(timeout: Int, callback: @escaping ([Byte]?) -> Void) {
         binaryCallbacks.append((.now() + .seconds(timeout), callback))
     }
 
-    func send(message: String, token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
+    public func send(message: String, token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
         let data: [Byte] = Array(message.utf8)
 
         packetPreparationQueue.async {
@@ -80,7 +80,7 @@ class RubegSocket {
         }
     }
 
-    func send(message: [Byte], token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
+    public func send(message: [Byte], token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
         packetPreparationQueue.async {
             self.send(
                 data: message,
