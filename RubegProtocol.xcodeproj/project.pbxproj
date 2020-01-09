@@ -33,7 +33,6 @@
 		5CAED73A23A8CEF400DE17EF /* String+SubscriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73923A8CEF400DE17EF /* String+SubscriptTests.swift */; };
 		5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73B23A9DF7700DE17EF /* Packet.swift */; };
 		5CAED73E23A9E75B00DE17EF /* PacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73D23A9E75B00DE17EF /* PacketTests.swift */; };
-		5CAED74023AB160B00DE17EF /* RubegProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73F23AB160B00DE17EF /* RubegProtocol.swift */; };
 		5CAED74223AB6DB900DE17EF /* OutcomingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */; };
 		5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */; };
 		5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */; };
@@ -506,7 +505,6 @@
 				5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */,
 				5CE420B723A22FFF00938B93 /* Int32+ByteArrayConversion.swift in Sources */,
 				5CAED74223AB6DB900DE17EF /* OutcomingTransmission.swift in Sources */,
-				5CAED74023AB160B00DE17EF /* RubegProtocol.swift in Sources */,
 				5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */,
 				5CAED73023A8BDAF00DE17EF /* ContentType.swift in Sources */,
 				5CAED70F23A3495D00DE17EF /* ConversionError.swift in Sources */,

@@ -8,9 +8,9 @@
 
 import Foundation
 
-typealias Byte = UInt8
+public typealias Byte = UInt8
 
-typealias Host = (
+public typealias Host = (
     address: String,
     port: Int32
 )
