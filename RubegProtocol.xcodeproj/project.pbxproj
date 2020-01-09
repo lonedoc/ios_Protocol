@@ -3,15 +3,50 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4C661B91D9C367FA190FD589 /* Pods_RubegProtocolTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC641747F37BEB3EB2D47C /* Pods_RubegProtocolTests.framework */; };
+		5C10368C23C17F7C008D31EF /* SynchronizedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */; };
 		5C3881AC23A1F0F700402AD8 /* RubegProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */; };
-		5C3881B123A1F0F700402AD8 /* RubegProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3881B023A1F0F700402AD8 /* RubegProtocolTests.swift */; };
-		5C3881B323A1F0F700402AD8 /* RubegProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C3881A523A1F0F700402AD8 /* RubegProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5CE420AD23A1FAD300938B93 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420AC23A1FAD300938B93 /* Socket.swift */; };
+		5C49D6B923C6CF160062A84B /* SynchronizedArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */; };
+		5CAED70B23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */; };
+		5CAED70D23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */; };
+		5CAED70F23A3495D00DE17EF /* ConversionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70E23A3495D00DE17EF /* ConversionError.swift */; };
+		5CAED71523A37EBC00DE17EF /* Int16+ByteArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED71423A37EBC00DE17EF /* Int16+ByteArrayConversion.swift */; };
+		5CAED71723A37EFD00DE17EF /* Int64+ByteArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED71623A37EFD00DE17EF /* Int64+ByteArrayConversion.swift */; };
+		5CAED71923A3878500DE17EF /* Int16+ByteArrayConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED71823A3878500DE17EF /* Int16+ByteArrayConversionTests.swift */; };
+		5CAED71B23A38DC600DE17EF /* Int64+ByteArrayConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED71A23A38DC600DE17EF /* Int64+ByteArrayConversionTests.swift */; };
+		5CAED71D23A3954F00DE17EF /* ByteArray+IntegerConversions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED71C23A3954F00DE17EF /* ByteArray+IntegerConversions.swift */; };
+		5CAED71F23A3975900DE17EF /* ByteArray+IntegerConversionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED71E23A3975900DE17EF /* ByteArray+IntegerConversionsTests.swift */; };
+		5CAED72123A742CC00DE17EF /* ByteBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED72023A742CC00DE17EF /* ByteBufferTests.swift */; };
+		5CAED72423A8B25D00DE17EF /* CoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED72323A8B25D00DE17EF /* CoderTests.swift */; };
+		5CAED72623A8B26700DE17EF /* Coder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED72523A8B26700DE17EF /* Coder.swift */; };
+		5CAED72A23A8BCFE00DE17EF /* Headers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED72923A8BCFE00DE17EF /* Headers.swift */; };
+		5CAED72E23A8BD2000DE17EF /* HeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED72D23A8BD2000DE17EF /* HeadersTests.swift */; };
+		5CAED73023A8BDAF00DE17EF /* ContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED72F23A8BDAF00DE17EF /* ContentType.swift */; };
+		5CAED73223A8BDD700DE17EF /* ContentTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73123A8BDD700DE17EF /* ContentTypeTests.swift */; };
+		5CAED73423A8C05600DE17EF /* HeadersBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73323A8C05600DE17EF /* HeadersBuilder.swift */; };
+		5CAED73623A8C06B00DE17EF /* HeadersBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73523A8C06B00DE17EF /* HeadersBuilderTests.swift */; };
+		5CAED73823A8CEA000DE17EF /* String+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73723A8CEA000DE17EF /* String+Subscript.swift */; };
+		5CAED73A23A8CEF400DE17EF /* String+SubscriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73923A8CEF400DE17EF /* String+SubscriptTests.swift */; };
+		5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73B23A9DF7700DE17EF /* Packet.swift */; };
+		5CAED73E23A9E75B00DE17EF /* PacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73D23A9E75B00DE17EF /* PacketTests.swift */; };
+		5CAED74023AB160B00DE17EF /* RubegProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73F23AB160B00DE17EF /* RubegProtocol.swift */; };
+		5CAED74223AB6DB900DE17EF /* OutcomingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */; };
+		5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */; };
+		5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */; };
+		5CAED74923AC8B4600DE17EF /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74823AC8B4600DE17EF /* Priority.swift */; };
+		5CAED74C23AC8B8600DE17EF /* PriorityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74B23AC8B8600DE17EF /* PriorityTests.swift */; };
+		5CAED74E23ACB13A00DE17EF /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */; };
+		5CAED75023B0645600DE17EF /* IncomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */; };
+		5CAED75223B065D700DE17EF /* OutcomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */; };
+		5CE420AD23A1FAD300938B93 /* RubegSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420AC23A1FAD300938B93 /* RubegSocket.swift */; };
+		5CE420B023A22B6D00938B93 /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420AF23A22B6D00938B93 /* ByteBuffer.swift */; };
+		5CE420B223A22D0400938B93 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420B123A22D0400938B93 /* Aliases.swift */; };
+		5CE420B723A22FFF00938B93 /* Int32+ByteArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420B623A22FFF00938B93 /* Int32+ByteArrayConversion.swift */; };
+		5CE420B923A233F800938B93 /* Int32+ByteArrayConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420B823A233F800938B93 /* Int32+ByteArrayConversionTests.swift */; };
 		9546AFEC6BF69A44FADBE946 /* Pods_RubegProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78AF41A041BCE1C1D47BD03A /* Pods_RubegProtocol.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,13 +62,50 @@
 
 /* Begin PBXFileReference section */
 		2141BF6E4CBB85F6455AD177 /* Pods-RubegProtocolTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RubegProtocolTests.release.xcconfig"; path = "Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests.release.xcconfig"; sourceTree = "<group>"; };
+		5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArray.swift; sourceTree = "<group>"; };
+		5C10369123C1A271008D31EF /* ProtocolShowcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProtocolShowcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RubegProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881A523A1F0F700402AD8 /* RubegProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RubegProtocol.h; sourceTree = "<group>"; };
 		5C3881A623A1F0F700402AD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C3881AB23A1F0F700402AD8 /* RubegProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RubegProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C3881B023A1F0F700402AD8 /* RubegProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubegProtocolTests.swift; sourceTree = "<group>"; };
 		5C3881B223A1F0F700402AD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5CE420AC23A1FAD300938B93 /* Socket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
+		5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArrayTests.swift; sourceTree = "<group>"; };
+		5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+ByteArrayConversionTests.swift"; sourceTree = "<group>"; };
+		5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+ByteArrayConversion.swift"; sourceTree = "<group>"; };
+		5CAED70E23A3495D00DE17EF /* ConversionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionError.swift; sourceTree = "<group>"; };
+		5CAED71423A37EBC00DE17EF /* Int16+ByteArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int16+ByteArrayConversion.swift"; sourceTree = "<group>"; };
+		5CAED71623A37EFD00DE17EF /* Int64+ByteArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int64+ByteArrayConversion.swift"; sourceTree = "<group>"; };
+		5CAED71823A3878500DE17EF /* Int16+ByteArrayConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int16+ByteArrayConversionTests.swift"; sourceTree = "<group>"; };
+		5CAED71A23A38DC600DE17EF /* Int64+ByteArrayConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int64+ByteArrayConversionTests.swift"; sourceTree = "<group>"; };
+		5CAED71C23A3954F00DE17EF /* ByteArray+IntegerConversions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ByteArray+IntegerConversions.swift"; sourceTree = "<group>"; };
+		5CAED71E23A3975900DE17EF /* ByteArray+IntegerConversionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ByteArray+IntegerConversionsTests.swift"; sourceTree = "<group>"; };
+		5CAED72023A742CC00DE17EF /* ByteBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBufferTests.swift; sourceTree = "<group>"; };
+		5CAED72323A8B25D00DE17EF /* CoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoderTests.swift; sourceTree = "<group>"; };
+		5CAED72523A8B26700DE17EF /* Coder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coder.swift; sourceTree = "<group>"; };
+		5CAED72923A8BCFE00DE17EF /* Headers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headers.swift; sourceTree = "<group>"; };
+		5CAED72D23A8BD2000DE17EF /* HeadersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadersTests.swift; sourceTree = "<group>"; };
+		5CAED72F23A8BDAF00DE17EF /* ContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentType.swift; sourceTree = "<group>"; };
+		5CAED73123A8BDD700DE17EF /* ContentTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTypeTests.swift; sourceTree = "<group>"; };
+		5CAED73323A8C05600DE17EF /* HeadersBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadersBuilder.swift; sourceTree = "<group>"; };
+		5CAED73523A8C06B00DE17EF /* HeadersBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadersBuilderTests.swift; sourceTree = "<group>"; };
+		5CAED73723A8CEA000DE17EF /* String+Subscript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Subscript.swift"; sourceTree = "<group>"; };
+		5CAED73923A8CEF400DE17EF /* String+SubscriptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SubscriptTests.swift"; sourceTree = "<group>"; };
+		5CAED73B23A9DF7700DE17EF /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		5CAED73D23A9E75B00DE17EF /* PacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTests.swift; sourceTree = "<group>"; };
+		5CAED73F23AB160B00DE17EF /* RubegProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RubegProtocol.swift; sourceTree = "<group>"; };
+		5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutcomingTransmission.swift; sourceTree = "<group>"; };
+		5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingTransmission.swift; sourceTree = "<group>"; };
+		5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		5CAED74823AC8B4600DE17EF /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		5CAED74B23AC8B8600DE17EF /* PriorityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityTests.swift; sourceTree = "<group>"; };
+		5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueueTests.swift; sourceTree = "<group>"; };
+		5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingTransmissionTests.swift; sourceTree = "<group>"; };
+		5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomingTransmissionTests.swift; sourceTree = "<group>"; };
+		5CE420AC23A1FAD300938B93 /* RubegSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubegSocket.swift; sourceTree = "<group>"; };
+		5CE420AF23A22B6D00938B93 /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
+		5CE420B123A22D0400938B93 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
+		5CE420B623A22FFF00938B93 /* Int32+ByteArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int32+ByteArrayConversion.swift"; sourceTree = "<group>"; };
+		5CE420B823A233F800938B93 /* Int32+ByteArrayConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int32+ByteArrayConversionTests.swift"; sourceTree = "<group>"; };
 		78AF41A041BCE1C1D47BD03A /* Pods_RubegProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RubegProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FBC641747F37BEB3EB2D47C /* Pods_RubegProtocolTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RubegProtocolTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8ABD494408DA634D3535856 /* Pods-RubegProtocolTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RubegProtocolTests.debug.xcconfig"; path = "Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -42,6 +114,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5C10368E23C1A271008D31EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C38819F23A1F0F700402AD8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -87,6 +166,7 @@
 			children = (
 				5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */,
 				5C3881AB23A1F0F700402AD8 /* RubegProtocolTests.xctest */,
+				5C10369123C1A271008D31EF /* ProtocolShowcase.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,9 +174,22 @@
 		5C3881A423A1F0F700402AD8 /* RubegProtocol */ = {
 			isa = PBXGroup;
 			children = (
+				5CAED73F23AB160B00DE17EF /* RubegProtocol.swift */,
 				5C3881A523A1F0F700402AD8 /* RubegProtocol.h */,
 				5C3881A623A1F0F700402AD8 /* Info.plist */,
-				5CE420AC23A1FAD300938B93 /* Socket.swift */,
+				5CE420B123A22D0400938B93 /* Aliases.swift */,
+				5CAED74723AC8B3200DE17EF /* Structures */,
+				5CE420B523A22E7800938B93 /* Extensions */,
+				5CE420AF23A22B6D00938B93 /* ByteBuffer.swift */,
+				5CAED72F23A8BDAF00DE17EF /* ContentType.swift */,
+				5CAED72923A8BCFE00DE17EF /* Headers.swift */,
+				5CAED73323A8C05600DE17EF /* HeadersBuilder.swift */,
+				5CAED72523A8B26700DE17EF /* Coder.swift */,
+				5CAED73B23A9DF7700DE17EF /* Packet.swift */,
+				5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */,
+				5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */,
+				5CE420AC23A1FAD300938B93 /* RubegSocket.swift */,
+				5CAED70E23A3495D00DE17EF /* ConversionError.swift */,
 			);
 			path = RubegProtocol;
 			sourceTree = "<group>";
@@ -104,10 +197,65 @@
 		5C3881AF23A1F0F700402AD8 /* RubegProtocolTests */ = {
 			isa = PBXGroup;
 			children = (
-				5C3881B023A1F0F700402AD8 /* RubegProtocolTests.swift */,
 				5C3881B223A1F0F700402AD8 /* Info.plist */,
+				5CAED74A23AC8B6100DE17EF /* Structures */,
+				5CAED72223A742D400DE17EF /* Extensions */,
+				5CAED72023A742CC00DE17EF /* ByteBufferTests.swift */,
+				5CAED73123A8BDD700DE17EF /* ContentTypeTests.swift */,
+				5CAED72D23A8BD2000DE17EF /* HeadersTests.swift */,
+				5CAED73523A8C06B00DE17EF /* HeadersBuilderTests.swift */,
+				5CAED72323A8B25D00DE17EF /* CoderTests.swift */,
+				5CAED73D23A9E75B00DE17EF /* PacketTests.swift */,
+				5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */,
+				5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */,
 			);
 			path = RubegProtocolTests;
+			sourceTree = "<group>";
+		};
+		5CAED72223A742D400DE17EF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5CAED71E23A3975900DE17EF /* ByteArray+IntegerConversionsTests.swift */,
+				5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */,
+				5CAED71823A3878500DE17EF /* Int16+ByteArrayConversionTests.swift */,
+				5CE420B823A233F800938B93 /* Int32+ByteArrayConversionTests.swift */,
+				5CAED71A23A38DC600DE17EF /* Int64+ByteArrayConversionTests.swift */,
+				5CAED73923A8CEF400DE17EF /* String+SubscriptTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5CAED74723AC8B3200DE17EF /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				5CAED74823AC8B4600DE17EF /* Priority.swift */,
+				5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */,
+				5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		5CAED74A23AC8B6100DE17EF /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				5CAED74B23AC8B8600DE17EF /* PriorityTests.swift */,
+				5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */,
+				5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
+		5CE420B523A22E7800938B93 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5CAED71C23A3954F00DE17EF /* ByteArray+IntegerConversions.swift */,
+				5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */,
+				5CAED71423A37EBC00DE17EF /* Int16+ByteArrayConversion.swift */,
+				5CE420B623A22FFF00938B93 /* Int32+ByteArrayConversion.swift */,
+				5CAED71623A37EFD00DE17EF /* Int64+ByteArrayConversion.swift */,
+				5CAED73723A8CEA000DE17EF /* String+Subscript.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		EC5086B32D351943A8ACF798 /* Pods */ = {
@@ -128,13 +276,29 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C3881B323A1F0F700402AD8 /* RubegProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5C10369023C1A271008D31EF /* ProtocolShowcase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C1036A223C1A274008D31EF /* Build configuration list for PBXNativeTarget "ProtocolShowcase" */;
+			buildPhases = (
+				5C10368D23C1A271008D31EF /* Sources */,
+				5C10368E23C1A271008D31EF /* Frameworks */,
+				5C10368F23C1A271008D31EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProtocolShowcase;
+			productName = ProtocolShowcase;
+			productReference = 5C10369123C1A271008D31EF /* ProtocolShowcase.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5C3881A123A1F0F700402AD8 /* RubegProtocol */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C3881B623A1F0F700402AD8 /* Build configuration list for PBXNativeTarget "RubegProtocol" */;
@@ -163,6 +327,7 @@
 				5C3881A723A1F0F700402AD8 /* Sources */,
 				5C3881A823A1F0F700402AD8 /* Frameworks */,
 				5C3881A923A1F0F700402AD8 /* Resources */,
+				D18C08DFA914FD20BF8DEA51 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -184,6 +349,9 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Rubeg NPO";
 				TargetAttributes = {
+					5C10369023C1A271008D31EF = {
+						CreatedOnToolsVersion = 11.3;
+					};
 					5C3881A123A1F0F700402AD8 = {
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
@@ -208,11 +376,19 @@
 			targets = (
 				5C3881A123A1F0F700402AD8 /* RubegProtocol */,
 				5C3881AA23A1F0F700402AD8 /* RubegProtocolTests */,
+				5C10369023C1A271008D31EF /* ProtocolShowcase */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5C10368F23C1A271008D31EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C3881A023A1F0F700402AD8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,14 +467,58 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D18C08DFA914FD20BF8DEA51 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5C10368D23C1A271008D31EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5C38819E23A1F0F700402AD8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CE420AD23A1FAD300938B93 /* Socket.swift in Sources */,
+				5CAED71523A37EBC00DE17EF /* Int16+ByteArrayConversion.swift in Sources */,
+				5CAED72623A8B26700DE17EF /* Coder.swift in Sources */,
+				5CE420AD23A1FAD300938B93 /* RubegSocket.swift in Sources */,
+				5CAED74923AC8B4600DE17EF /* Priority.swift in Sources */,
+				5CE420B023A22B6D00938B93 /* ByteBuffer.swift in Sources */,
+				5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */,
+				5CE420B723A22FFF00938B93 /* Int32+ByteArrayConversion.swift in Sources */,
+				5CAED74223AB6DB900DE17EF /* OutcomingTransmission.swift in Sources */,
+				5CAED74023AB160B00DE17EF /* RubegProtocol.swift in Sources */,
+				5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */,
+				5CAED73023A8BDAF00DE17EF /* ContentType.swift in Sources */,
+				5CAED70F23A3495D00DE17EF /* ConversionError.swift in Sources */,
+				5CAED71D23A3954F00DE17EF /* ByteArray+IntegerConversions.swift in Sources */,
+				5C10368C23C17F7C008D31EF /* SynchronizedArray.swift in Sources */,
+				5CAED73423A8C05600DE17EF /* HeadersBuilder.swift in Sources */,
+				5CE420B223A22D0400938B93 /* Aliases.swift in Sources */,
+				5CAED71723A37EFD00DE17EF /* Int64+ByteArrayConversion.swift in Sources */,
+				5CAED70D23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift in Sources */,
+				5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */,
+				5CAED73823A8CEA000DE17EF /* String+Subscript.swift in Sources */,
+				5CAED72A23A8BCFE00DE17EF /* Headers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +526,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C3881B123A1F0F700402AD8 /* RubegProtocolTests.swift in Sources */,
+				5CE420B923A233F800938B93 /* Int32+ByteArrayConversionTests.swift in Sources */,
+				5CAED71F23A3975900DE17EF /* ByteArray+IntegerConversionsTests.swift in Sources */,
+				5CAED73A23A8CEF400DE17EF /* String+SubscriptTests.swift in Sources */,
+				5CAED73E23A9E75B00DE17EF /* PacketTests.swift in Sources */,
+				5CAED73623A8C06B00DE17EF /* HeadersBuilderTests.swift in Sources */,
+				5CAED74E23ACB13A00DE17EF /* PriorityQueueTests.swift in Sources */,
+				5CAED72423A8B25D00DE17EF /* CoderTests.swift in Sources */,
+				5CAED71923A3878500DE17EF /* Int16+ByteArrayConversionTests.swift in Sources */,
+				5CAED72E23A8BD2000DE17EF /* HeadersTests.swift in Sources */,
+				5CAED70B23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift in Sources */,
+				5C49D6B923C6CF160062A84B /* SynchronizedArrayTests.swift in Sources */,
+				5CAED75223B065D700DE17EF /* OutcomingTransmissionTests.swift in Sources */,
+				5CAED73223A8BDD700DE17EF /* ContentTypeTests.swift in Sources */,
+				5CAED75023B0645600DE17EF /* IncomingTransmissionTests.swift in Sources */,
+				5CAED71B23A38DC600DE17EF /* Int64+ByteArrayConversionTests.swift in Sources */,
+				5CAED72123A742CC00DE17EF /* ByteBufferTests.swift in Sources */,
+				5CAED74C23AC8B8600DE17EF /* PriorityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +557,42 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5C1036A323C1A274008D31EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TZX223S8SD;
+				INFOPLIST_FILE = ProtocolShowcase/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.rubeg38.ProtocolShowcase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5C1036A423C1A274008D31EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TZX223S8SD;
+				INFOPLIST_FILE = ProtocolShowcase/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.rubeg38.ProtocolShowcase;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		5C3881B423A1F0F700402AD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -506,6 +778,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TZX223S8SD;
 				INFOPLIST_FILE = RubegProtocolTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -526,6 +799,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TZX223S8SD;
 				INFOPLIST_FILE = RubegProtocolTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -541,6 +815,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5C1036A223C1A274008D31EF /* Build configuration list for PBXNativeTarget "ProtocolShowcase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C1036A323C1A274008D31EF /* Debug */,
+				5C1036A423C1A274008D31EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5C38819C23A1F0F700402AD8 /* Build configuration list for PBXProject "RubegProtocol" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
