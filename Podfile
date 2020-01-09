@@ -10,7 +10,10 @@ target 'RubegProtocol' do
 
   target 'RubegProtocolTests' do
     inherit! :search_paths
+
     # Pods for testing
+    pod 'BlueSocket', '~> 1.0.46'
+
   end
 
 end
