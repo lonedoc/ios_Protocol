@@ -62,7 +62,6 @@
 /* Begin PBXFileReference section */
 		2141BF6E4CBB85F6455AD177 /* Pods-RubegProtocolTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RubegProtocolTests.release.xcconfig"; path = "Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests.release.xcconfig"; sourceTree = "<group>"; };
 		5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArray.swift; sourceTree = "<group>"; };
-		5C10369123C1A271008D31EF /* ProtocolShowcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProtocolShowcase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RubegProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881A523A1F0F700402AD8 /* RubegProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RubegProtocol.h; sourceTree = "<group>"; };
 		5C3881A623A1F0F700402AD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,13 +112,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5C10368E23C1A271008D31EF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C38819F23A1F0F700402AD8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -165,7 +157,6 @@
 			children = (
 				5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */,
 				5C3881AB23A1F0F700402AD8 /* RubegProtocolTests.xctest */,
-				5C10369123C1A271008D31EF /* ProtocolShowcase.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -281,23 +272,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5C10369023C1A271008D31EF /* ProtocolShowcase */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5C1036A223C1A274008D31EF /* Build configuration list for PBXNativeTarget "ProtocolShowcase" */;
-			buildPhases = (
-				5C10368D23C1A271008D31EF /* Sources */,
-				5C10368E23C1A271008D31EF /* Frameworks */,
-				5C10368F23C1A271008D31EF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ProtocolShowcase;
-			productName = ProtocolShowcase;
-			productReference = 5C10369123C1A271008D31EF /* ProtocolShowcase.app */;
-			productType = "com.apple.product-type.application";
-		};
 		5C3881A123A1F0F700402AD8 /* RubegProtocol */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C3881B623A1F0F700402AD8 /* Build configuration list for PBXNativeTarget "RubegProtocol" */;
@@ -348,9 +322,6 @@
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Rubeg NPO";
 				TargetAttributes = {
-					5C10369023C1A271008D31EF = {
-						CreatedOnToolsVersion = 11.3;
-					};
 					5C3881A123A1F0F700402AD8 = {
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
@@ -375,19 +346,11 @@
 			targets = (
 				5C3881A123A1F0F700402AD8 /* RubegProtocol */,
 				5C3881AA23A1F0F700402AD8 /* RubegProtocolTests */,
-				5C10369023C1A271008D31EF /* ProtocolShowcase */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5C10368F23C1A271008D31EF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C3881A023A1F0F700402AD8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -486,13 +449,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5C10368D23C1A271008D31EF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5C38819E23A1F0F700402AD8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -555,42 +511,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		5C1036A323C1A274008D31EF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZX223S8SD;
-				INFOPLIST_FILE = ProtocolShowcase/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.rubeg38.ProtocolShowcase;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		5C1036A423C1A274008D31EF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TZX223S8SD;
-				INFOPLIST_FILE = ProtocolShowcase/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.rubeg38.ProtocolShowcase;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		5C3881B423A1F0F700402AD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -813,15 +733,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5C1036A223C1A274008D31EF /* Build configuration list for PBXNativeTarget "ProtocolShowcase" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C1036A323C1A274008D31EF /* Debug */,
-				5C1036A423C1A274008D31EF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5C38819C23A1F0F700402AD8 /* Build configuration list for PBXProject "RubegProtocol" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

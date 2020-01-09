@@ -140,107 +140,13 @@ public class RubegSocket {
         }
     }
 
-    // TODO: decompose
     private func startCommunicationLoop() {
         while started {
-            // Read datagram
-            var data: Data
-            var host: Host
+            handleIncomingDatagrams()
+            retransmitPackets()
+            dropFailedTransmissions()
+            sendNextPackets()
 
-            repeat {
-                data = Data()
-
-                do {
-                    let (count, addressOpt) = try socket.readDatagram(into: &data)
-
-                    if count == 0 {
-                        break
-                    }
-
-                    guard let address = addressOpt else {
-                        break
-                    }
-
-                    guard let hostnameAndPort = Socket.hostnameAndPort(from: address) else {
-                        break
-                    }
-
-                    host = (address: hostnameAndPort.hostname, port: hostnameAndPort.port)
-                } catch let error {
-                    print(error.localizedDescription)
-                    break
-                }
-
-                let packet = Packet(encoded: data)
-
-                // Debug
-                print("<- \(packet)")
-
-                switch packet.headers.contentType {
-                case .acknowledgement:
-                    congestionWindow.removeAll { packet.isAcknowledgementOf($0.packet) }
-                case .string, .binary:
-                    handleDataPacket(packet, origin: host)
-                default:
-                    break
-                }
-            } while data.count > 0
-
-            // Retransmit packets
-            for index in 0..<congestionWindow.count {
-                let packetContainer = congestionWindow[index]
-
-                if packetContainer.lastAttemptTime + .milliseconds(retransmittInterval) <= .now() {
-                    if packetContainer.attemptsCount < maxAttemptsCount {
-                        let prefix = String(repeating: "-> ", count: packetContainer.attemptsCount + 1)
-
-                        sendPacket(packetContainer.packet, to: packetContainer.host, logPrefix: prefix)
-
-                        congestionWindow[index].lastAttemptTime = .now()
-                    }
-
-                    congestionWindow[index].attemptsCount += 1
-                }
-            }
-
-            // Drop failed transmissions
-            let failedPackets = congestionWindow.filter { $0.attemptsCount > maxAttemptsCount }
-
-            failedPackets.forEach { packetContainer in
-                let messageNumber = packetContainer.packet.headers.messageNumber
-                let address = packetContainer.host.address
-
-                packetsQueue.removeAll {
-                    $0.packet.headers.messageNumber == messageNumber && $0.host.address == address
-                }
-
-                outcomingTransmissions[address]?[messageNumber]?.complete(success: false)
-                outcomingTransmissions[address]?.removeValue(forKey: messageNumber)
-            }
-
-            congestionWindow.removeAll { $0.attemptsCount > maxAttemptsCount }
-
-            // Send
-            let congestionWindowIsFull = congestionWindow.count >= congestionWindowSize
-            let packetsQueueIsEmpty = packetsQueue.count == 0
-
-            if congestionWindowIsFull || packetsQueueIsEmpty {
-                continue
-            }
-
-            if let packetContainer = packetsQueue.dequeue() {
-                let (packet, host, _, _) = packetContainer
-
-                if [.string, .binary].contains(packet.headers.contentType) {
-                    congestionWindow.append(packetContainer)
-                    congestionWindow[congestionWindow.count - 1].lastAttemptTime = .now()
-                    congestionWindow[congestionWindow.count - 1].attemptsCount = 1
-                }
-
-                sendPacket(packet, to: host, logPrefix: "-> ")
-            }
-
-            // Remove obsolete callbacks by associated timeout
             stringCallbacks.forEach {
                 if $0.deadline < .now() {
                     $0.callback(nil)
@@ -255,6 +161,121 @@ public class RubegSocket {
 
             stringCallbacks.removeAll { $0.deadline < .now() }
             binaryCallbacks.removeAll { $0.deadline < .now() }
+        }
+    }
+
+    private func handleIncomingDatagrams() {
+        var data: Data
+        var host: Host
+
+        repeat {
+            data = Data()
+
+            do {
+                let (count, addressOpt) = try socket.readDatagram(into: &data)
+
+                if count == 0 {
+                    break
+                }
+
+                guard let address = addressOpt else {
+                    break
+                }
+
+                guard let hostnameAndPort = Socket.hostnameAndPort(from: address) else {
+                    break
+                }
+
+                host = (address: hostnameAndPort.hostname, port: hostnameAndPort.port)
+            } catch let error {
+                print(error.localizedDescription)
+                break
+            }
+
+            let packet = Packet(encoded: data)
+
+            // Debug
+            print("<- \(packet)")
+
+            switch packet.headers.contentType {
+            case .acknowledgement:
+                congestionWindow.removeAll { packet.isAcknowledgementOf($0.packet) }
+
+                guard let transmission = outcomingTransmissions[host.address]?[packet.headers.messageNumber] else {
+                    break
+                }
+
+                let address = host.address
+                let messageNumber = packet.headers.messageNumber
+                let packetNumber = packet.headers.packetNumber
+
+                outcomingTransmissions[address]![messageNumber]!.addAcknowledgement(packetNumber: Int(packetNumber))
+
+                if transmission.done {
+                    transmission.complete(success: true)
+                }
+            case .string, .binary:
+                handleDataPacket(packet, origin: host)
+            default:
+                break
+            }
+        } while data.count > 0
+    }
+
+    private func retransmitPackets() {
+        for index in 0..<congestionWindow.count {
+            let packetContainer = congestionWindow[index]
+
+            if packetContainer.lastAttemptTime + .milliseconds(retransmittInterval) <= .now() {
+                if packetContainer.attemptsCount < maxAttemptsCount {
+                    let prefix = String(repeating: "-> ", count: packetContainer.attemptsCount + 1)
+
+                    sendPacket(packetContainer.packet, to: packetContainer.host, logPrefix: prefix)
+
+                    congestionWindow[index].lastAttemptTime = .now()
+                }
+
+                congestionWindow[index].attemptsCount += 1
+            }
+        }
+    }
+
+    private func dropFailedTransmissions() {
+        let failedPackets = congestionWindow.filter { $0.attemptsCount > maxAttemptsCount }
+
+        failedPackets.forEach { packetContainer in
+            let messageNumber = packetContainer.packet.headers.messageNumber
+            let address = packetContainer.host.address
+
+            packetsQueue.removeAll {
+                $0.packet.headers.messageNumber == messageNumber && $0.host.address == address
+            }
+
+            outcomingTransmissions[address]?[messageNumber]?.complete(success: false)
+            outcomingTransmissions[address]?.removeValue(forKey: messageNumber)
+        }
+
+        congestionWindow.removeAll { $0.attemptsCount > maxAttemptsCount }
+    }
+
+    private func sendNextPackets() {
+        let congestionWindowIsFull = congestionWindow.count >= congestionWindowSize
+        let packetsQueueIsEmpty = packetsQueue.count == 0
+
+        if congestionWindowIsFull || packetsQueueIsEmpty {
+            return
+        }
+
+        if let packetContainer = packetsQueue.dequeue() {
+            let (packet, host, _, _) = packetContainer
+
+            if [.string, .binary].contains(packet.headers.contentType) {
+                congestionWindow.append(packetContainer)
+                congestionWindow[congestionWindow.count - 1].lastAttemptTime = .now()
+                congestionWindow[congestionWindow.count - 1].attemptsCount = 1
+            }
+
+            sendPacket(packet, to: host, logPrefix: "-> ")
         }
     }
 
