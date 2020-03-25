@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C661B91D9C367FA190FD589 /* Pods_RubegProtocolTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC641747F37BEB3EB2D47C /* Pods_RubegProtocolTests.framework */; };
+		5C0659F1242B47E90039176C /* RubegSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0659F0242B47E90039176C /* RubegSocketDelegate.swift */; };
 		5C10368C23C17F7C008D31EF /* SynchronizedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */; };
 		5C3881AC23A1F0F700402AD8 /* RubegProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */; };
 		5C49D6B923C6CF160062A84B /* SynchronizedArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		2141BF6E4CBB85F6455AD177 /* Pods-RubegProtocolTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RubegProtocolTests.release.xcconfig"; path = "Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests.release.xcconfig"; sourceTree = "<group>"; };
+		5C0659F0242B47E90039176C /* RubegSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubegSocketDelegate.swift; sourceTree = "<group>"; };
 		5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArray.swift; sourceTree = "<group>"; };
 		5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RubegProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881A523A1F0F700402AD8 /* RubegProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RubegProtocol.h; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */,
 				5CE420AC23A1FAD300938B93 /* RubegSocket.swift */,
 				5CAED70E23A3495D00DE17EF /* ConversionError.swift */,
+				5C0659F0242B47E90039176C /* RubegSocketDelegate.swift */,
 			);
 			path = RubegProtocol;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				5CAED71723A37EFD00DE17EF /* Int64+ByteArrayConversion.swift in Sources */,
 				5CAED70D23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift in Sources */,
 				5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */,
+				5C0659F1242B47E90039176C /* RubegSocketDelegate.swift in Sources */,
 				5CAED73823A8CEA000DE17EF /* String+Subscript.swift in Sources */,
 				5CAED72A23A8BCFE00DE17EF /* Headers.swift in Sources */,
 			);

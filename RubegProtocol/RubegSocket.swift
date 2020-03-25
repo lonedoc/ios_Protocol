@@ -34,8 +34,7 @@ public class RubegSocket {
     private let communicationQueue = DispatchQueue(label: "rubeg_protocol.communication_queue", qos: .default)
     private let packetPreparationQueue = DispatchQueue(label: "rubeg_protocol.packet_preparation_queue", qos: .default)
 
-    private var stringCallbacks = SynchronizedArray<CallbackContainer<String?>>()
-    private var binaryCallbacks = SynchronizedArray<CallbackContainer<[Byte]?>>()
+    public weak var delegate: RubegSocketDelegate?
 
     public init() throws {
         socket = try Socket.create(family: .inet, type: .datagram, proto: .udp)
@@ -56,14 +55,6 @@ public class RubegSocket {
 
     public func close() {
         started = false
-    }
-
-    public func read(timeout: Int, callback: @escaping (String?) -> Void) {
-        stringCallbacks.append((.now() + .seconds(timeout), callback))
-    }
-
-    public func read(timeout: Int, callback: @escaping ([Byte]?) -> Void) {
-        binaryCallbacks.append((.now() + .seconds(timeout), callback))
     }
 
     public func send(message: String, token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
@@ -146,21 +137,6 @@ public class RubegSocket {
             retransmitPackets()
             dropFailedTransmissions()
             sendNextPackets()
-
-            stringCallbacks.forEach {
-                if $0.deadline < .now() {
-                    $0.callback(nil)
-                }
-            }
-
-            binaryCallbacks.forEach {
-                if $0.deadline < .now() {
-                    $0.callback(nil)
-                }
-            }
-
-            stringCallbacks.removeAll { $0.deadline < .now() }
-            binaryCallbacks.removeAll { $0.deadline < .now() }
         }
     }
 
@@ -329,11 +305,9 @@ public class RubegSocket {
                     return
                 }
 
-                stringCallbacks.forEach { $0.callback(text) }
-                stringCallbacks.removeAll()
+                delegate?.stringMessageReceived(text)
             } else if packet.headers.contentType == .binary {
-                binaryCallbacks.forEach { $0.callback(message) }
-                binaryCallbacks.removeAll()
+                delegate?.binaryMessageReceived(message)
             }
 
             incomingTransmissions[host.address]!.removeValue(forKey: messageNumber)
