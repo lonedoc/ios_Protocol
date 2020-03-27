@@ -31,8 +31,8 @@ public class RubegSocket {
 
     private var started = false
 
-    private let communicationQueue = DispatchQueue(label: "rubeg_protocol.communication_queue", qos: .default)
-    private let packetPreparationQueue = DispatchQueue(label: "rubeg_protocol.packet_preparation_queue", qos: .default)
+    private let communicationQueue = DispatchQueue(label: "rubeg_protocol.communication_queue", qos: .userInitiated)
+    private let packetPreparationQueue = DispatchQueue(label: "rubeg_protocol.packet_preparation_queue", qos: .userInitiated)
 
     public weak var delegate: RubegSocketDelegate?
 
@@ -262,7 +262,7 @@ public class RubegSocket {
 
         let acknowledgement = Packet.createAcknowledgement(for: packet)
 
-        sendPacket(acknowledgement, to: host, logPrefix: "->")
+        sendPacket(acknowledgement, to: host, logPrefix: "-> ")
 
         if incomingMessagesCount[host.address] == nil {
             incomingMessagesCount[host.address] = 0
@@ -320,7 +320,7 @@ public class RubegSocket {
                 try socket.write(from: packet.encode(), to: address)
 
                 // debug
-                print("\(logPrefix) \(packet)")
+                print("\(logPrefix)\(packet)")
             } catch let error {
                 print(error.localizedDescription)
             }
