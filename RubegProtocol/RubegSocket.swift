@@ -15,7 +15,7 @@ public class RubegSocket {
     private let syncInterval = 3000
     private let retransmittInterval = 10_000
     private let maxAttemptsCount = 3
-    private let congestionWindowSize = 24
+    private let congestionWindowSize = 12
 
     private var outcomingMessagesCount = [String: Int64]()
     private var incomingMessagesCount = [String: Int64]()
