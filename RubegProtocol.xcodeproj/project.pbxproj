@@ -42,6 +42,8 @@
 		5CAED74E23ACB13A00DE17EF /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */; };
 		5CAED75023B0645600DE17EF /* IncomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */; };
 		5CAED75223B065D700DE17EF /* OutcomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */; };
+		5CCDF683242DE26A00C7A2B3 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */; };
+		5CCDF687242DEDAE00C7A2B3 /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */; };
 		5CE420AD23A1FAD300938B93 /* RubegSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420AC23A1FAD300938B93 /* RubegSocket.swift */; };
 		5CE420B023A22B6D00938B93 /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420AF23A22B6D00938B93 /* ByteBuffer.swift */; };
 		5CE420B223A22D0400938B93 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420B123A22D0400938B93 /* Aliases.swift */; };
@@ -101,6 +103,8 @@
 		5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueueTests.swift; sourceTree = "<group>"; };
 		5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingTransmissionTests.swift; sourceTree = "<group>"; };
 		5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomingTransmissionTests.swift; sourceTree = "<group>"; };
+		5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedListTests.swift; sourceTree = "<group>"; };
 		5CE420AC23A1FAD300938B93 /* RubegSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubegSocket.swift; sourceTree = "<group>"; };
 		5CE420AF23A22B6D00938B93 /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
 		5CE420B123A22D0400938B93 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 				5CAED74823AC8B4600DE17EF /* Priority.swift */,
 				5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */,
 				5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */,
+				5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				5CAED74B23AC8B8600DE17EF /* PriorityTests.swift */,
 				5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */,
 				5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */,
+				5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -476,6 +482,7 @@
 				5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */,
 				5C0659F1242B47E90039176C /* RubegSocketDelegate.swift in Sources */,
 				5CAED73823A8CEA000DE17EF /* String+Subscript.swift in Sources */,
+				5CCDF683242DE26A00C7A2B3 /* LinkedList.swift in Sources */,
 				5CAED72A23A8BCFE00DE17EF /* Headers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,6 +501,7 @@
 				5CAED71923A3878500DE17EF /* Int16+ByteArrayConversionTests.swift in Sources */,
 				5CAED72E23A8BD2000DE17EF /* HeadersTests.swift in Sources */,
 				5CAED70B23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift in Sources */,
+				5CCDF687242DEDAE00C7A2B3 /* LinkedListTests.swift in Sources */,
 				5C49D6B923C6CF160062A84B /* SynchronizedArrayTests.swift in Sources */,
 				5CAED75223B065D700DE17EF /* OutcomingTransmissionTests.swift in Sources */,
 				5CAED73223A8BDD700DE17EF /* ContentTypeTests.swift in Sources */,
