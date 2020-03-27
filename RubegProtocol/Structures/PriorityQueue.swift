@@ -19,21 +19,17 @@ class PriorityQueue<T> {
     private let lockQueue = DispatchQueue(label: "rubeg_protocol.priority_queue", qos: .default, attributes: .concurrent)
 
     var count: Int {
-        return lockQueue.sync {
-            self.lowPriorityItems.count + mediumPriorityItems.count + highPriorityItems.count
-        }
+        return self.lowPriorityItems.count + mediumPriorityItems.count + highPriorityItems.count
     }
 
     func enqueue(_ item: T, priority: Priority) {
-        lockQueue.sync(flags: .barrier) {
-            switch priority {
-            case .low:
-                self.lowPriorityItems.append(item)
-            case .medium:
-                self.mediumPriorityItems.append(item)
-            case .high:
-                self.highPriorityItems.append(item)
-            }
+        switch priority {
+        case .low:
+            self.lowPriorityItems.append(item)
+        case .medium:
+            self.mediumPriorityItems.append(item)
+        case .high:
+            self.highPriorityItems.append(item)
         }
     }
 
@@ -44,34 +40,85 @@ class PriorityQueue<T> {
     func dequeue() -> T? {
         var result: T?
 
-        lockQueue.sync(flags: .barrier) {
-            if highPriorityItems.count > 0 {
-                result = highPriorityItems.remove(at: 0)
-            } else if mediumPriorityItems.count > 0 {
-                result = mediumPriorityItems.remove(at: 0)
-            } else if lowPriorityItems.count > 0 {
-                result = lowPriorityItems.remove(at: 0)
-            } else {
-                result = nil
-            }
+        if highPriorityItems.count > 0 {
+            result = highPriorityItems.remove(at: 0)
+        } else if mediumPriorityItems.count > 0 {
+            result = mediumPriorityItems.remove(at: 0)
+        } else if lowPriorityItems.count > 0 {
+            result = lowPriorityItems.remove(at: 0)
+        } else {
+            result = nil
         }
 
         return result
     }
 
     func removeAll(where predicate: (T) -> Bool) {
-        lockQueue.sync(flags: .barrier) {
-            self.lowPriorityItems.removeAll { predicate($0) }
-            self.mediumPriorityItems.removeAll { predicate($0) }
-            self.highPriorityItems.removeAll { predicate($0) }
-        }
+        self.lowPriorityItems.removeAll { predicate($0) }
+        self.mediumPriorityItems.removeAll { predicate($0) }
+        self.highPriorityItems.removeAll { predicate($0) }
     }
 
     func clear() {
-        lockQueue.sync(flags: .barrier) {
-            self.lowPriorityItems.removeAll()
-            self.mediumPriorityItems.removeAll()
-            self.highPriorityItems.removeAll()
-        }
+        self.lowPriorityItems.removeAll()
+        self.mediumPriorityItems.removeAll()
+        self.highPriorityItems.removeAll()
     }
+
+//    var count: Int {
+//        return lockQueue.sync {
+//            self.lowPriorityItems.count + mediumPriorityItems.count + highPriorityItems.count
+//        }
+//    }
+//
+//    func enqueue(_ item: T, priority: Priority) {
+//        lockQueue.sync(flags: .barrier) {
+//            switch priority {
+//            case .low:
+//                self.lowPriorityItems.append(item)
+//            case .medium:
+//                self.mediumPriorityItems.append(item)
+//            case .high:
+//                self.highPriorityItems.append(item)
+//            }
+//        }
+//    }
+//
+//    func enqueue(_ item: T) {
+//        enqueue(item, priority: .low)
+//    }
+//
+//    func dequeue() -> T? {
+//        var result: T?
+//
+//        lockQueue.sync(flags: .barrier) {
+//            if highPriorityItems.count > 0 {
+//                result = highPriorityItems.remove(at: 0)
+//            } else if mediumPriorityItems.count > 0 {
+//                result = mediumPriorityItems.remove(at: 0)
+//            } else if lowPriorityItems.count > 0 {
+//                result = lowPriorityItems.remove(at: 0)
+//            } else {
+//                result = nil
+//            }
+//        }
+//
+//        return result
+//    }
+//
+//    func removeAll(where predicate: (T) -> Bool) {
+//        lockQueue.sync(flags: .barrier) {
+//            self.lowPriorityItems.removeAll { predicate($0) }
+//            self.mediumPriorityItems.removeAll { predicate($0) }
+//            self.highPriorityItems.removeAll { predicate($0) }
+//        }
+//    }
+//
+//    func clear() {
+//        lockQueue.sync(flags: .barrier) {
+//            self.lowPriorityItems.removeAll()
+//            self.mediumPriorityItems.removeAll()
+//            self.highPriorityItems.removeAll()
+//        }
+//    }
 }
