@@ -50,6 +50,10 @@ class LinkedList<T> {
             count -= 1
         }
 
+        if count == 0 {
+            tail = nil
+        }
+
         return value
     }
 
