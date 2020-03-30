@@ -170,7 +170,7 @@ public class RubegSocket {
             let packet = Packet(encoded: data)
 
             // Debug
-            print("<- \(packet)")
+            // print("<- \(packet)")
 
             switch packet.headers.contentType {
             case .acknowledgement:
@@ -319,7 +319,7 @@ public class RubegSocket {
                 try socket.write(from: packet.encode(), to: address)
 
                 // debug
-                print("\(logPrefix)\(packet)")
+                // print("\(logPrefix)\(packet)")
             } catch let error {
                 print(error.localizedDescription)
             }
