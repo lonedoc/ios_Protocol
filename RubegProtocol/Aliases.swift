@@ -17,6 +17,11 @@ public typealias Host = (
 
 typealias PacketContainer = (
     packet: Packet,
+    host: Host
+)
+
+typealias ExtendedPacketContainer = (
+    packet: Packet,
     host: Host,
     lastAttemptTime: DispatchTime,
     attemptsCount: Int
@@ -26,3 +31,13 @@ typealias CallbackContainer<T> = (
     deadline: DispatchTime,
     callback: (T) -> Void
 )
+
+struct MessageSignature: Hashable {
+    var number: Int64
+    var address: String
+
+    init(_ number: Int64, _ address: String) {
+        self.number = number
+        self.address = address
+    }
+}

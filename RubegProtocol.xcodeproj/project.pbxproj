@@ -42,6 +42,7 @@
 		5CAED74E23ACB13A00DE17EF /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */; };
 		5CAED75023B0645600DE17EF /* IncomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */; };
 		5CAED75223B065D700DE17EF /* OutcomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */; };
+		5CB49D782431A8280009B133 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB49D772431A8280009B133 /* Queue.swift */; };
 		5CCDF683242DE26A00C7A2B3 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */; };
 		5CCDF687242DEDAE00C7A2B3 /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */; };
 		5CE420AD23A1FAD300938B93 /* RubegSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE420AC23A1FAD300938B93 /* RubegSocket.swift */; };
@@ -103,6 +104,7 @@
 		5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueueTests.swift; sourceTree = "<group>"; };
 		5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingTransmissionTests.swift; sourceTree = "<group>"; };
 		5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomingTransmissionTests.swift; sourceTree = "<group>"; };
+		5CB49D772431A8280009B133 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedListTests.swift; sourceTree = "<group>"; };
 		5CE420AC23A1FAD300938B93 /* RubegSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubegSocket.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */,
 				5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */,
 				5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */,
+				5CB49D772431A8280009B133 /* Queue.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				5CAED73823A8CEA000DE17EF /* String+Subscript.swift in Sources */,
 				5CCDF683242DE26A00C7A2B3 /* LinkedList.swift in Sources */,
 				5CAED72A23A8BCFE00DE17EF /* Headers.swift in Sources */,
+				5CB49D782431A8280009B133 /* Queue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
