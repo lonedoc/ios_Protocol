@@ -234,14 +234,11 @@ public class RubegSocket {
     }
 
     private func sendNextPackets() {
-        let congestionWindowIsFull = congestionWindow.count >= congestionWindowSize
-        let packetsQueueIsEmpty = packetsQueue.count == 0
+        while congestionWindow.count < congestionWindowSize && packetsQueue.count > 0 {
+            guard let packetContainer = packetsQueue.dequeue() else {
+                break
+            }
 
-        if congestionWindowIsFull || packetsQueueIsEmpty {
-            return
-        }
-
-        if let packetContainer = packetsQueue.dequeue() {
             let (packet, host, _, _) = packetContainer
 
             if [.string, .binary].contains(packet.headers.contentType) {
