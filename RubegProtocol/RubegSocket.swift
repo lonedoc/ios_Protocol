@@ -15,7 +15,7 @@ struct SocketConstants {
     static let syncInterval = 3000
     static let retransmitInterval = 10_000
     static let maxAttemptsCount = 3
-    static let congestionWindowSize = 12
+    static let congestionWindowSize = 24
 }
 
 public class RubegSocket {

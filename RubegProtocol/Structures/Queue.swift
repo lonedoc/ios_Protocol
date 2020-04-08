@@ -8,26 +8,81 @@
 
 import Foundation
 
-class Queue<T> {
-    private var items = LinkedList<T>()
+private class Node<T> {
+    private(set) var value: T
+    var next: Node<T>?
 
-    private let lockQueue = DispatchQueue(label: "rubeg_protocol.queue", qos: .default, attributes: .concurrent)
-
-    var count: Int {
-        return lockQueue.sync(flags: .barrier) {
-            self.items.count
-        }
+    init(value: T, next: Node<T>?) {
+        self.value = value
+        self.next = next
     }
+}
+
+class Queue<T> {
+    private var head: Node<T>?
+    private var tail: Node<T>?
+
+    private let lock: DispatchQueue = {
+        let label = "queue_\(UUID().uuidString)"
+        return DispatchQueue(label: label, qos: .default, attributes: .concurrent)
+    }()
 
     func enqueue(_ item: T) {
-        lockQueue.sync(flags: .barrier) {
-            self.items.add(item)
+        let node = Node(value: item, next: nil)
+
+        lock.sync(flags: .barrier) {
+            if self.head == nil {
+                self.head = node
+                self.tail  = node
+            } else {
+                self.tail?.next = node
+                self.tail = node
+            }
         }
     }
 
     func dequeue() -> T? {
-        return lockQueue.sync(flags: .barrier) {
-            self.items.removeFirst()
+        let item = head?.value
+
+        lock.sync(flags: .barrier) {
+            head = head?.next
+            if head == nil {
+                tail = nil
+            }
+        }
+
+        return item
+    }
+
+    func removeAll(where predicate: @escaping (T) -> Bool) {
+        lock.sync(flags: .barrier) {
+            var prev: Node<T>?
+            var node = self.head
+
+            while node != nil {
+                if predicate(node!.value) {
+                    if node === self.head {
+                        self.head = node!.next
+                    }
+
+                    prev?.next = node!.next
+
+                    if node === self.tail {
+                        self.tail = prev
+                    }
+                } else {
+                    prev = node
+                }
+
+                node = node!.next
+            }
+        }
+    }
+
+    func clear() {
+        lock.sync(flags: .barrier) {
+            self.head = nil
+            self.tail = nil
         }
     }
 }

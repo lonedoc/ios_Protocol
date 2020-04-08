@@ -13,16 +13,13 @@ class PriorityQueueTests: XCTestCase {
     func testThatItemsAreAddedToTheQueue() {
         let queue = PriorityQueue<Int>()
 
-        XCTAssertEqual(queue.count, 0)
-
         queue.enqueue(0, priority: .medium)
-
-        XCTAssertEqual(queue.count, 1)
-
         queue.enqueue(1, priority: .medium)
         queue.enqueue(2, priority: .medium)
 
-        XCTAssertEqual(queue.count, 3)
+        XCTAssertEqual(queue.dequeue(), 0)
+        XCTAssertEqual(queue.dequeue(), 1)
+        XCTAssertEqual(queue.dequeue(), 2)
     }
 
     func testThatHighPriorityItemsAreRetrievedFirst() {
