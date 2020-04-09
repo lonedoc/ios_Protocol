@@ -16,7 +16,7 @@ class PriorityQueue<T> {
     private var mediumPriorityItems = Queue<T>()
     private var highPriorityItems = Queue<T>()
 
-    func enqueue(_ item: T, priority: Priority) {
+    func enqueue(_ item: T, priority: Priority = .low) {
         switch priority {
         case .low:
             lowPriorityItems.enqueue(item)
@@ -25,10 +25,6 @@ class PriorityQueue<T> {
         case .high:
             highPriorityItems.enqueue(item)
         }
-    }
-
-    func enqueue(_ item: T) {
-        enqueue(item, priority: .low)
     }
 
     func dequeue() -> T? {
