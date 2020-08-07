@@ -11,11 +11,12 @@ import Socket
 
 struct SocketConstants {
     static let packetSize = 962
+    static let sleepInterval: UInt32 = 100000
     static let connectionDropInterval = 20_000
     static let syncInterval = 3000
-    static let retransmitInterval = 10_000
-    static let maxAttemptsCount = 3
-    static let congestionWindowSize = 24
+    static let retransmitInterval = 5_000
+    static let maxAttemptsCount = 5
+    static let congestionWindowSize = 64
 }
 
 public class RubegSocket {
@@ -124,6 +125,7 @@ public class RubegSocket {
 
             let chunk = Array(data[leftBound..<rightBound])
 
+            // TODO: Set packet size
             let headers = HeadersBuilder()
                 .set(messageNumber: messageNumber)
                 .set(messageSize: Int32(data.count))
@@ -227,6 +229,7 @@ public class RubegSocket {
     private func sendNextPackets() {
         while congestionWindow.count < SocketConstants.congestionWindowSize {
             guard let packetContainer = packetsQueue.dequeue() else {
+                usleep(SocketConstants.sleepInterval)
                 break
             }
 
