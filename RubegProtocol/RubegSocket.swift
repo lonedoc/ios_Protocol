@@ -263,6 +263,7 @@ public class RubegSocket {
     private func startReceiveLoop() {
         while started {
             guard let (packet, host) = readPacket() else {
+                usleep(SocketConstants.sleepInterval)
                 continue
             }
 
