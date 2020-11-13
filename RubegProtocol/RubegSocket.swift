@@ -193,7 +193,10 @@ public class RubegSocket {
 
     private func startReceiveLoop() {
         while started {
-            guard let read = readPacket() else { continue }
+            guard let read = readPacket() else {
+                usleep(ProtocolConstants.sleepInterval)
+                continue
+            }
 
             let (packet, host) = read
 
@@ -446,7 +449,7 @@ public class RubegSocket {
         outgoingTransmission = outgoingTransmission ?? outgoingTransmissions.dequeue()
 
         guard let packetContainer = outgoingTransmission?.getNextPacket() else {
-            sleep(ProtocolConstants.sleepInterval)
+            usleep(ProtocolConstants.sleepInterval)
             return
         }
 
