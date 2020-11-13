@@ -45,8 +45,10 @@ public class RubegSocket {
         }
     }()
 
-    @Atomic public var delegate: RubegSocketDelegate?
+    public weak var delegate: RubegSocketDelegate?
     @Atomic private(set) var started = false
+    
+    public init() { }
 
     public func open() throws {
         // TODO: lock
