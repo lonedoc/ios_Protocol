@@ -17,12 +17,12 @@ public typealias Host = (
 
 typealias PacketContainer = (
     packet: Packet,
+    host: Host
+)
+
+typealias PacketContainerExtended = (
+    packet: Packet,
     host: Host,
     lastAttemptTime: DispatchTime,
     attemptsCount: Int
-)
-
-typealias CallbackContainer<T> = (
-    deadline: DispatchTime,
-    callback: (T) -> Void
 )

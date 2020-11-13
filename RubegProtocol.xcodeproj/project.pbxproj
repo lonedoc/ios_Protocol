@@ -10,8 +10,12 @@
 		4C661B91D9C367FA190FD589 /* Pods_RubegProtocolTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC641747F37BEB3EB2D47C /* Pods_RubegProtocolTests.framework */; };
 		5C0659F1242B47E90039176C /* RubegSocketDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0659F0242B47E90039176C /* RubegSocketDelegate.swift */; };
 		5C10368C23C17F7C008D31EF /* SynchronizedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */; };
+		5C242BC9254ABAFC001BAF99 /* Synchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C242BC8254ABAFC001BAF99 /* Synchronizer.swift */; };
 		5C3881AC23A1F0F700402AD8 /* RubegProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */; };
 		5C49D6B923C6CF160062A84B /* SynchronizedArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */; };
+		5C5843A52548194000378AAC /* ProtocolConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5843A42548194000378AAC /* ProtocolConstants.swift */; };
+		5C5843AB25482CA600378AAC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5843AA25482CA600378AAC /* Queue.swift */; };
+		5C5843AF25482EA400378AAC /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5843AE25482EA400378AAC /* Atomic.swift */; };
 		5CAED70B23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */; };
 		5CAED70D23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */; };
 		5CAED70F23A3495D00DE17EF /* ConversionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70E23A3495D00DE17EF /* ConversionError.swift */; };
@@ -34,7 +38,7 @@
 		5CAED73A23A8CEF400DE17EF /* String+SubscriptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73923A8CEF400DE17EF /* String+SubscriptTests.swift */; };
 		5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73B23A9DF7700DE17EF /* Packet.swift */; };
 		5CAED73E23A9E75B00DE17EF /* PacketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED73D23A9E75B00DE17EF /* PacketTests.swift */; };
-		5CAED74223AB6DB900DE17EF /* OutcomingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */; };
+		5CAED74223AB6DB900DE17EF /* OutgoingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74123AB6DB800DE17EF /* OutgoingTransmission.swift */; };
 		5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */; };
 		5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */; };
 		5CAED74923AC8B4600DE17EF /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74823AC8B4600DE17EF /* Priority.swift */; };
@@ -66,12 +70,16 @@
 		2141BF6E4CBB85F6455AD177 /* Pods-RubegProtocolTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RubegProtocolTests.release.xcconfig"; path = "Target Support Files/Pods-RubegProtocolTests/Pods-RubegProtocolTests.release.xcconfig"; sourceTree = "<group>"; };
 		5C0659F0242B47E90039176C /* RubegSocketDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubegSocketDelegate.swift; sourceTree = "<group>"; };
 		5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArray.swift; sourceTree = "<group>"; };
+		5C242BC8254ABAFC001BAF99 /* Synchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronizer.swift; sourceTree = "<group>"; };
 		5C3881A223A1F0F700402AD8 /* RubegProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RubegProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881A523A1F0F700402AD8 /* RubegProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RubegProtocol.h; sourceTree = "<group>"; };
 		5C3881A623A1F0F700402AD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C3881AB23A1F0F700402AD8 /* RubegProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RubegProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C3881B223A1F0F700402AD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C49D6B823C6CF160062A84B /* SynchronizedArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedArrayTests.swift; sourceTree = "<group>"; };
+		5C5843A42548194000378AAC /* ProtocolConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolConstants.swift; sourceTree = "<group>"; };
+		5C5843AA25482CA600378AAC /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		5C5843AE25482EA400378AAC /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+ByteArrayConversionTests.swift"; sourceTree = "<group>"; };
 		5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+ByteArrayConversion.swift"; sourceTree = "<group>"; };
 		5CAED70E23A3495D00DE17EF /* ConversionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionError.swift; sourceTree = "<group>"; };
@@ -95,7 +103,7 @@
 		5CAED73B23A9DF7700DE17EF /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		5CAED73D23A9E75B00DE17EF /* PacketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTests.swift; sourceTree = "<group>"; };
 		5CAED73F23AB160B00DE17EF /* RubegProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RubegProtocol.swift; sourceTree = "<group>"; };
-		5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutcomingTransmission.swift; sourceTree = "<group>"; };
+		5CAED74123AB6DB800DE17EF /* OutgoingTransmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingTransmission.swift; sourceTree = "<group>"; };
 		5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingTransmission.swift; sourceTree = "<group>"; };
 		5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
 		5CAED74823AC8B4600DE17EF /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
@@ -174,6 +182,7 @@
 				5C3881A523A1F0F700402AD8 /* RubegProtocol.h */,
 				5C3881A623A1F0F700402AD8 /* Info.plist */,
 				5CE420B123A22D0400938B93 /* Aliases.swift */,
+				5C5843B225482EAC00378AAC /* Utils */,
 				5CAED74723AC8B3200DE17EF /* Structures */,
 				5CE420B523A22E7800938B93 /* Extensions */,
 				5CE420AF23A22B6D00938B93 /* ByteBuffer.swift */,
@@ -183,10 +192,11 @@
 				5CAED72523A8B26700DE17EF /* Coder.swift */,
 				5CAED73B23A9DF7700DE17EF /* Packet.swift */,
 				5CAED74323AB6DC500DE17EF /* IncomingTransmission.swift */,
-				5CAED74123AB6DB800DE17EF /* OutcomingTransmission.swift */,
+				5CAED74123AB6DB800DE17EF /* OutgoingTransmission.swift */,
 				5CE420AC23A1FAD300938B93 /* RubegSocket.swift */,
 				5CAED70E23A3495D00DE17EF /* ConversionError.swift */,
 				5C0659F0242B47E90039176C /* RubegSocketDelegate.swift */,
+				5C5843A42548194000378AAC /* ProtocolConstants.swift */,
 			);
 			path = RubegProtocol;
 			sourceTree = "<group>";
@@ -209,6 +219,15 @@
 			path = RubegProtocolTests;
 			sourceTree = "<group>";
 		};
+		5C5843B225482EAC00378AAC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5C5843AE25482EA400378AAC /* Atomic.swift */,
+				5C242BC8254ABAFC001BAF99 /* Synchronizer.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		5CAED72223A742D400DE17EF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +248,7 @@
 				5CAED74523AC8B2400DE17EF /* PriorityQueue.swift */,
 				5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */,
 				5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */,
+				5C5843AA25482CA600378AAC /* Queue.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -463,13 +483,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CAED71523A37EBC00DE17EF /* Int16+ByteArrayConversion.swift in Sources */,
+				5C5843A52548194000378AAC /* ProtocolConstants.swift in Sources */,
 				5CAED72623A8B26700DE17EF /* Coder.swift in Sources */,
 				5CE420AD23A1FAD300938B93 /* RubegSocket.swift in Sources */,
 				5CAED74923AC8B4600DE17EF /* Priority.swift in Sources */,
+				5C242BC9254ABAFC001BAF99 /* Synchronizer.swift in Sources */,
 				5CE420B023A22B6D00938B93 /* ByteBuffer.swift in Sources */,
 				5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */,
 				5CE420B723A22FFF00938B93 /* Int32+ByteArrayConversion.swift in Sources */,
-				5CAED74223AB6DB900DE17EF /* OutcomingTransmission.swift in Sources */,
+				5CAED74223AB6DB900DE17EF /* OutgoingTransmission.swift in Sources */,
 				5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */,
 				5CAED73023A8BDAF00DE17EF /* ContentType.swift in Sources */,
 				5CAED70F23A3495D00DE17EF /* ConversionError.swift in Sources */,
@@ -480,6 +502,8 @@
 				5CAED71723A37EFD00DE17EF /* Int64+ByteArrayConversion.swift in Sources */,
 				5CAED70D23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift in Sources */,
 				5CAED73C23A9DF7700DE17EF /* Packet.swift in Sources */,
+				5C5843AF25482EA400378AAC /* Atomic.swift in Sources */,
+				5C5843AB25482CA600378AAC /* Queue.swift in Sources */,
 				5C0659F1242B47E90039176C /* RubegSocketDelegate.swift in Sources */,
 				5CAED73823A8CEA000DE17EF /* String+Subscript.swift in Sources */,
 				5CCDF683242DE26A00C7A2B3 /* LinkedList.swift in Sources */,

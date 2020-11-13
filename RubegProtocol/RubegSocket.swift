@@ -9,106 +9,165 @@
 import Foundation
 import Socket
 
+private let sendingQueueId = ""
+private let receivingQueueId = ""
+private let splittingQueueId = ""
+private let callbackQueueId = ""
+
 public class RubegSocket {
-    private let packetSize = 962
-    private let connectionDropInterval = 20_000
-    private let syncInterval = 3000
-    private let retransmittInterval = 10_000
-    private let maxAttemptsCount = 3
-    private let congestionWindowSize = 12
+    private var incomingMessagesCount: Int64 = 0
+    private var outgoingMessagesCount: Int64 = 0
 
-    private var outcomingMessagesCount = [String: Int64]()
-    private var incomingMessagesCount = [String: Int64]()
+    private var incomingTransmissions = [Int64: IncomingTransmission]()
+    private var outgoingTransmissions = Queue<OutgoingTransmission>()
+    private var outgoingTransmission: OutgoingTransmission?
+    private var receivedAcknowledgements = Queue<PacketContainer>()
+    private var acknowledgements = Queue<PacketContainer>()
+    private var congestionWindow = [PacketContainerExtended]()
 
-    private var outcomingTransmissions = [String: [Int64: OutcomingTransmission]]()
-    private var incomingTransmissions = [String: [Int64: IncomingTransmission]]()
+    private var socket: Socket?
 
-    private let packetsQueue = PriorityQueue<PacketContainer>()
-    private var congestionWindow = [PacketContainer]()
+    private let sendingQueue = DispatchQueue(label: sendingQueueId)
+    private let receivingQueue = DispatchQueue(label: receivingQueueId)
+    private let callbackQueue = DispatchQueue(label: callbackQueueId)
 
-    private var socket: Socket
+    private let splittingQueue: OperationQueue = {
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
 
-    private var started = false
+    private lazy var synchronizer: Synchronizer<String> = {
+        let keys = Set(arrayLiteral: sendingQueueId, receivingQueueId)
 
-    private let communicationQueue = DispatchQueue(label: "rubeg_protocol.communication_queue", qos: .userInitiated)
-    private let packetPreparationQueue = DispatchQueue(label: "rubeg_protocol.packet_preparation_queue", qos: .userInitiated)
+        return Synchronizer(keys: keys) { [weak self] in
+            self?.reset()
+        }
+    }()
 
-    public weak var delegate: RubegSocketDelegate?
+    @Atomic public var delegate: RubegSocketDelegate?
+    @Atomic private(set) var started = false
 
-    public init() throws {
-        socket = try Socket.create(family: .inet, type: .datagram, proto: .udp)
-        try socket.setBlocking(mode: false)
-    }
+    public func open() throws {
+        // TODO: lock
 
-    public func open() {
         if started {
             return
         }
 
+        socket = try Socket.create(family: .inet, type: .datagram, proto: .udp)
+        try socket?.setBlocking(mode: false)
+
         started = true
 
-        communicationQueue.async {
-            self.startCommunicationLoop()
-        }
+        receivingQueue.async { self.startReceiveLoop() }
+        sendingQueue.async { self.startSendLoop() }
+
+        // TODO: unlock
     }
 
     public func close() {
+        // TODO: lock
+
         started = false
     }
 
-    public func send(message: String, token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
+    private func reset() {
+        incomingMessagesCount = 0
+        outgoingMessagesCount = 0
+
+        incomingTransmissions.removeAll()
+        outgoingTransmissions.clear()
+        outgoingTransmission = nil
+        congestionWindow.removeAll()
+        receivedAcknowledgements.clear()
+        acknowledgements.clear()
+
+        socket?.close()
+
+        // TODO: unlock
+    }
+
+    public func send(
+        message: String,
+        token: String?,
+        to host: Host,
+        complete: @escaping (Bool) -> Void
+    ) {
+        if !started {
+            complete(false)
+        }
+
         let data: [Byte] = Array(message.utf8)
 
-        packetPreparationQueue.async {
+        splittingQueue.addOperation {
             self.send(
                 data: data,
                 token: token,
                 contentType: .string,
                 host: host,
-                completion: completion
+                complete: complete
             )
         }
     }
 
-    public func send(message: [Byte], token: String?, to host: Host, completion: @escaping (Bool) -> Void) {
-        packetPreparationQueue.async {
+    public func send(
+        message: [Byte],
+        token: String?,
+        to host: Host,
+        progress: ((Int) -> Void)? = nil,
+        complete: @escaping (Bool) -> Void
+    ) {
+        if !started {
+            complete(false)
+        }
+
+        splittingQueue.addOperation {
             self.send(
                 data: message,
                 token: token,
-                contentType: .binary,
+                contentType: .string,
                 host: host,
-                completion: completion
+                progress: progress,
+                complete: complete
             )
         }
     }
 
-    private func send(data: [Byte], token: String?, contentType: ContentType, host: Host, completion: @escaping (Bool) -> Void) {
-        if !outcomingMessagesCount.keys.contains(host.address) {
-            outcomingMessagesCount[host.address] = 0
-        }
+    private func send(
+        data: [Byte],
+        token: String?,
+        contentType: ContentType,
+        host: Host,
+        progress: ((Int) -> Void)? = nil,
+        complete: @escaping (Bool) -> Void
+    ) {
+        outgoingMessagesCount += 1
+        let messageNumber = outgoingMessagesCount
 
-        outcomingMessagesCount[host.address]! += 1
-
-        let messageNumber = outcomingMessagesCount[host.address]!
-
-        var packetsCount = data.count / packetSize
-
-        if data.count % packetSize != 0 {
+        var packetsCount = data.count / ProtocolConstants.packetSize
+        if data.count % ProtocolConstants.packetSize != 0 {
             packetsCount += 1
         }
 
-        if outcomingTransmissions[host.address] == nil {
-            outcomingTransmissions[host.address] = [Int64: OutcomingTransmission]()
-        }
+        let transmission = OutgoingTransmission(
+            packetsCount: packetsCount,
+            messageNumber: messageNumber,
+            progress: progress,
+            complete: complete
+        )
 
-        outcomingTransmissions[host.address]![messageNumber] =
-            OutcomingTransmission(packetsCount, completion: completion)
+        outgoingTransmissions.enqueue(transmission)
 
         var packetNumber: Int32 = 1
 
         var leftBound = 0
-        while leftBound < data.count {
-            let rightBound = leftBound + packetSize < data.count ? leftBound + packetSize : data.count
+        while leftBound < data.count && !transmission.failed {
+            var rightBound = leftBound + ProtocolConstants.packetSize
+
+            if rightBound > data.count {
+                rightBound = data.count
+            }
 
             let chunk = Array(data[leftBound..<rightBound])
 
@@ -123,176 +182,107 @@ public class RubegSocket {
 
             let packet = Packet(data: chunk, headers: headers)
 
-            packetsQueue.enqueue((packet, host, .now(), 0), priority: .medium)
+            transmission.add(packet: PacketContainer(packet, host))
 
             packetNumber += 1
-            leftBound += packetSize
+            leftBound = rightBound
         }
     }
 
-    private func startCommunicationLoop() {
+    private func startReceiveLoop() {
         while started {
-            handleIncomingDatagrams()
-            retransmitPackets()
-            dropFailedTransmissions()
-            sendNextPackets()
-        }
-    }
+            guard let read = readPacket() else { continue }
 
-    private func handleIncomingDatagrams() {
-        var data: Data
-        var host: Host
+            let (packet, host) = read
 
-        repeat {
-            data = Data()
-
-            do {
-                let (count, addressOpt) = try socket.readDatagram(into: &data)
-
-                if count == 0 {
-                    break
-                }
-
-                guard let address = addressOpt else {
-                    break
-                }
-
-                guard let hostnameAndPort = Socket.hostnameAndPort(from: address) else {
-                    break
-                }
-
-                host = (address: hostnameAndPort.hostname, port: hostnameAndPort.port)
-            } catch let error {
-                print(error.localizedDescription)
-                break
-            }
-
-            let packet = Packet(encoded: data)
-
-            // Debug
-            // print("<- \(packet)")
+            print("<- \(packet)")
 
             switch packet.headers.contentType {
             case .acknowledgement:
-                congestionWindow.removeAll { packet.isAcknowledgementOf($0.packet) }
-
-                guard let transmission = outcomingTransmissions[host.address]?[packet.headers.messageNumber] else {
-                    break
-                }
-
-                let address = host.address
-                let messageNumber = packet.headers.messageNumber
-                let packetNumber = packet.headers.packetNumber
-
-                outcomingTransmissions[address]![messageNumber]!.addAcknowledgement(packetNumber: Int(packetNumber))
-
-                if transmission.done {
-                    transmission.complete(success: true)
-                }
-            case .string, .binary:
-                handleDataPacket(packet, origin: host)
+                receivedAcknowledgements.enqueue(PacketContainer(packet, host))
+            case .binary, .string:
+                handleDataPacket(packet, host)
             default:
                 break
             }
-        } while data.count > 0
-    }
 
-    private func retransmitPackets() {
-        for index in 0..<congestionWindow.count {
-            let packetContainer = congestionWindow[index]
-
-            if packetContainer.lastAttemptTime + .milliseconds(retransmittInterval) <= .now() {
-                if packetContainer.attemptsCount < maxAttemptsCount {
-                    let prefix = String(repeating: "-> ", count: packetContainer.attemptsCount + 1)
-
-                    sendPacket(packetContainer.packet, to: packetContainer.host, logPrefix: prefix)
-
-                    congestionWindow[index].lastAttemptTime = .now()
-                }
-
-                congestionWindow[index].attemptsCount += 1
-            }
-        }
-    }
-
-    private func dropFailedTransmissions() {
-        let failedPackets = congestionWindow.filter { $0.attemptsCount > maxAttemptsCount }
-
-        failedPackets.forEach { packetContainer in
-            let messageNumber = packetContainer.packet.headers.messageNumber
-            let address = packetContainer.host.address
-
-            packetsQueue.removeAll {
-                $0.packet.headers.messageNumber == messageNumber && $0.host.address == address
-            }
-
-            outcomingTransmissions[address]?[messageNumber]?.complete(success: false)
-            outcomingTransmissions[address]?.removeValue(forKey: messageNumber)
+            incomingTransmissions = incomingTransmissions.filter { !$0.value.failed }
         }
 
-        congestionWindow.removeAll { $0.attemptsCount > maxAttemptsCount }
+        synchronizer.synchronize(with: receivingQueueId)
     }
 
-    private func sendNextPackets() {
-        while congestionWindow.count < congestionWindowSize && packetsQueue.count > 0 {
-            guard let packetContainer = packetsQueue.dequeue() else {
-                break
-            }
-
-            let (packet, host, _, _) = packetContainer
-
-            if [.string, .binary].contains(packet.headers.contentType) {
-                congestionWindow.append(packetContainer)
-                congestionWindow[congestionWindow.count - 1].lastAttemptTime = .now()
-                congestionWindow[congestionWindow.count - 1].attemptsCount = 1
-            }
-
-            sendPacket(packet, to: host, logPrefix: "-> ")
+    private func readPacket() -> (Packet, Host)? {
+        guard let socket = socket else {
+            return nil
         }
+
+        var data = Data()
+        var host: Host
+
+        do {
+            let (count, addressOpt) = try socket.readDatagram(into: &data)
+
+            if count == 0 {
+                return nil
+            }
+
+            guard let address = addressOpt else {
+                return nil
+            }
+
+            guard let hostnameAndPort = Socket.hostnameAndPort(from: address) else {
+                return nil
+            }
+
+            host = (
+                address: hostnameAndPort.hostname,
+                port: hostnameAndPort.port
+            )
+        } catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+
+        let packet = Packet(encoded: data)
+
+        return (packet, host)
     }
 
-    private func handleDataPacket(_ packet: Packet, origin host: Host) {
+    private func handleDataPacket(_ packet: Packet, _ host: Host) {
         guard [.string, .binary].contains(packet.headers.contentType) else {
             return
         }
 
         let acknowledgement = Packet.createAcknowledgement(for: packet)
-
-        sendPacket(acknowledgement, to: host, logPrefix: "-> ")
-
-        if incomingMessagesCount[host.address] == nil {
-            incomingMessagesCount[host.address] = 0
-        }
+        acknowledgements.enqueue(PacketContainer(acknowledgement, host))
 
         let messageNumber = packet.headers.messageNumber
 
-        let isObsolete = messageNumber <= incomingMessagesCount[host.address]! && messageNumber != 0
-        let isPending = incomingTransmissions[host.address]?[messageNumber] != nil
+        let isObsolete = messageNumber <= incomingMessagesCount && messageNumber != 0
+        let isPending = incomingTransmissions[messageNumber] != nil
 
         if isObsolete && !isPending {
             return
         }
 
-        if messageNumber > incomingMessagesCount[host.address]! {
-            incomingMessagesCount[host.address]! += 1
+        if messageNumber > incomingMessagesCount {
+            incomingMessagesCount = messageNumber
         }
 
-        if incomingTransmissions[host.address] == nil {
-            incomingTransmissions[host.address] = [Int64: IncomingTransmission]()
+        if incomingTransmissions[messageNumber] == nil {
+            incomingTransmissions[messageNumber] =
+                IncomingTransmission(packet: packet)
         }
 
-        if incomingTransmissions[host.address]![messageNumber] == nil {
-            incomingTransmissions[host.address]![messageNumber] = IncomingTransmission(packet: packet)
-        } else {
-            incomingTransmissions[host.address]![messageNumber]!.add(packet: packet)
-        }
-
-        guard let transmission = incomingTransmissions[host.address]![messageNumber] else {
+        guard let transmission = incomingTransmissions[messageNumber] else {
             return
         }
 
+        transmission.add(packet: packet)
+
         if transmission.done {
-            guard let message = transmission.message else {
+            guard let message = transmission.data else {
                 return
             }
 
@@ -301,25 +291,188 @@ public class RubegSocket {
                     return
                 }
 
-                delegate?.stringMessageReceived(text)
-            } else if packet.headers.contentType == .binary {
-                delegate?.binaryMessageReceived(message)
+                callbackQueue.async {
+                    self.delegate?.stringMessageReceived(text)
+                }
+            } else {
+                callbackQueue.async {
+                    self.delegate?.binaryMessageReceived(message)
+                }
             }
 
-            incomingTransmissions[host.address]!.removeValue(forKey: messageNumber)
+            incomingTransmissions.removeValue(forKey: messageNumber)
         }
     }
 
-    private func sendPacket(_ packet: Packet, to host: Host, logPrefix: String) {
-        if let address = Socket.createAddress(for: host.address, on: host.port) {
-            do {
-                try socket.write(from: packet.encode(), to: address)
+    private func startSendLoop() {
+        while started {
+            var ack = receivedAcknowledgements.dequeue()
 
-                // debug
-                // print("\(logPrefix)\(packet)")
-            } catch let error {
-                print(error.localizedDescription)
+            while ack != nil {
+                handleAcknowledgement(ack!.packet, host: ack!.host)
+                ack = receivedAcknowledgements.dequeue()
             }
+
+            retransmitPackets()
+            dropFailedTransmissions()
+            sendNextPacket()
+        }
+
+        splittingQueue.cancelAllOperations()
+
+        if let ot = outgoingTransmission {
+            callbackQueue.async {
+                ot.onComplete(false)
+            }
+        }
+
+        outgoingTransmission = nil
+
+        var transmission = outgoingTransmissions.dequeue()
+        while let currentTransmission = transmission {
+            callbackQueue.async {
+                currentTransmission.onComplete(false)
+            }
+
+            transmission = outgoingTransmissions.dequeue()
+        }
+
+        synchronizer.synchronize(with: sendingQueueId)
+    }
+
+    private func handleAcknowledgement(_ acknowledgement: Packet, host: Host) {
+        guard acknowledgement.headers.contentType == .acknowledgement else {
+            return
+        }
+
+        guard let index = (congestionWindow.firstIndex { acknowledgement.isAcknowledgementOf($0.packet)
+        }) else {
+            return
+        }
+
+        congestionWindow.remove(at: index)
+
+        guard let transmission = outgoingTransmission else {
+            return
+        }
+
+        if transmission.messageNumber != acknowledgement.headers.messageNumber {
+            return
+        }
+
+        let packetNumber = acknowledgement.headers.packetNumber
+        transmission.addAcknowledgement(packetNumber: Int(packetNumber))
+
+        if let onProgress = transmission.onProgress {
+            callbackQueue.async {
+                onProgress(transmission.progress)
+            }
+        }
+
+        if transmission.done {
+            callbackQueue.async {
+                transmission.onComplete(true)
+            }
+
+            outgoingTransmission = nil
+        }
+    }
+
+    private func retransmitPackets() {
+        congestionWindow.forEach { packetContainer in
+            let deadline = packetContainer.lastAttemptTime + .milliseconds(ProtocolConstants.retransmitInterval)
+
+            if deadline < .now() {
+                if packetContainer.attemptsCount < ProtocolConstants.maxAttemptCount {
+                    let prefix = String(
+                        repeating: "-> ",
+                        count: packetContainer.attemptsCount + 1
+                    )
+
+                    sendPacket(
+                        packetContainer.packet,
+                        to: packetContainer.host,
+                        logPrefix: prefix
+                    )
+                }
+            }
+        }
+    }
+
+    private func dropFailedTransmissions() {
+        var failedMessageNumbers = Set<Int64>()
+
+        for (index, packetConainer) in congestionWindow.enumerated() {
+            let messageNumber = packetConainer.packet.headers.messageNumber
+
+            if packetConainer.attemptsCount > ProtocolConstants.maxAttemptCount {
+                failedMessageNumbers.insert(messageNumber)
+                congestionWindow.remove(at: index)
+                continue
+            }
+
+            if failedMessageNumbers.contains(messageNumber) {
+                congestionWindow.remove(at: index)
+            }
+        }
+
+        guard let currentTransmission = outgoingTransmission else {
+            return
+        }
+
+        if failedMessageNumbers.contains(currentTransmission.messageNumber) {
+            callbackQueue.async {
+                currentTransmission.onComplete(false)
+            }
+
+            outgoingTransmission?.failed = true
+            outgoingTransmission = nil
+        }
+    }
+
+    private func sendNextPacket() {
+        if congestionWindow.count >= ProtocolConstants.congestionWindowSize {
+            return
+        }
+
+        if let acknowledgementContainer = acknowledgements.dequeue() {
+            let (packet, host) = acknowledgementContainer
+            sendPacket(packet, to: host, logPrefix: "-> ")
+            return
+        }
+
+        outgoingTransmission = outgoingTransmission ?? outgoingTransmissions.dequeue()
+
+        guard let packetContainer = outgoingTransmission?.getNextPacket() else {
+            sleep(ProtocolConstants.sleepInterval)
+            return
+        }
+
+        let (packet, host) = packetContainer
+
+        let container = PacketContainerExtended(packet, host, .now(), 1)
+        congestionWindow.append(container)
+
+        sendPacket(packet, to: host, logPrefix: "-> ")
+    }
+
+    private func sendPacket(_ packet: Packet, to host: Host, logPrefix: String) {
+        guard let socket = socket else {
+            return
+        }
+
+        guard let address =
+            Socket.createAddress(for: host.address, on: host.port)
+        else {
+            return
+        }
+
+        do {
+            try socket.write(from: packet.encode(), to: address)
+
+            print("\(logPrefix)\(packet)")
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
 }
