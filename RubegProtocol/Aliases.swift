@@ -15,6 +15,11 @@ public typealias Host = (
     port: Int32
 )
 
+public typealias Session = (
+    incomingMessagesCount: Int64,
+    outgoingMessagesCount: Int64
+)
+
 typealias PacketContainer = (
     packet: Packet,
     host: Host

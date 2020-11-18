@@ -37,22 +37,21 @@ public class RubegSocket {
         return queue
     }()
 
-    private lazy var synchronizer: Synchronizer<String> = {
-        let keys = Set(arrayLiteral: sendingQueueId, receivingQueueId)
-
-        return Synchronizer(keys: keys) { [weak self] in
-            self?.reset()
-        }
-    }()
-
     public weak var delegate: RubegSocketDelegate?
     @Atomic private(set) var started = false
-    
+
     public init() { }
 
-    public func open() throws {
-        // TODO: lock
+    public init(session: Session) {
+        incomingMessagesCount = session.incomingMessagesCount
+        outgoingMessagesCount = session.outgoingMessagesCount
+    }
 
+    public var session: Session {
+        return (incomingMessagesCount, outgoingMessagesCount)
+    }
+
+    public func open() throws {
         if started {
             return
         }
@@ -64,17 +63,13 @@ public class RubegSocket {
 
         receivingQueue.async { self.startReceiveLoop() }
         sendingQueue.async { self.startSendLoop() }
-
-        // TODO: unlock
     }
 
     public func close() {
-        // TODO: lock
-
         started = false
     }
 
-    private func reset() {
+    public func reset() {
         incomingMessagesCount = 0
         outgoingMessagesCount = 0
 
@@ -86,8 +81,6 @@ public class RubegSocket {
         acknowledgements.clear()
 
         socket?.close()
-
-        // TODO: unlock
     }
 
     public func send(
@@ -213,8 +206,6 @@ public class RubegSocket {
 
             incomingTransmissions = incomingTransmissions.filter { !$0.value.failed }
         }
-
-        synchronizer.synchronize(with: receivingQueueId)
     }
 
     private func readPacket() -> (Packet, Host)? {
@@ -341,8 +332,6 @@ public class RubegSocket {
 
             transmission = outgoingTransmissions.dequeue()
         }
-
-        synchronizer.synchronize(with: sendingQueueId)
     }
 
     private func handleAcknowledgement(_ acknowledgement: Packet, host: Host) {
