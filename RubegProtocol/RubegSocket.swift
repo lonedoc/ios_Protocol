@@ -42,12 +42,12 @@ public class RubegSocket {
 
     public init() { }
 
-    public init(session: Session) {
-        incomingMessagesCount = session.incomingMessagesCount
-        outgoingMessagesCount = session.outgoingMessagesCount
+    public init(count: Count) {
+        incomingMessagesCount = count.incoming
+        outgoingMessagesCount = count.outgoing
     }
 
-    public var session: Session {
+    public var session: Count {
         return (incomingMessagesCount, outgoingMessagesCount)
     }
 
