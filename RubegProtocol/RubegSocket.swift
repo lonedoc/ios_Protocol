@@ -373,7 +373,9 @@ public class RubegSocket {
     }
 
     private func retransmitPackets() {
-        congestionWindow.forEach { packetContainer in
+        for index in 0..<congestionWindow.count {
+            let packetContainer = congestionWindow[index]
+            
             let deadline = packetContainer.lastAttemptTime + .milliseconds(ProtocolConstants.retransmitInterval)
 
             if deadline < .now() {
@@ -388,7 +390,11 @@ public class RubegSocket {
                         to: packetContainer.host,
                         logPrefix: prefix
                     )
+                    
+                    congestionWindow[index].lastAttemptTime = .now()
                 }
+                
+                congestionWindow[index].attemptsCount += 1
             }
         }
     }
