@@ -13,5 +13,6 @@ enum ContentType: Byte {
     case sync = 0xFE
     case error = 0xFD
     case string = 0x00
+    case noconnection = 0x14
     case binary = 0x01
 }

@@ -198,7 +198,7 @@ public class RubegSocket {
             switch packet.headers.contentType {
             case .acknowledgement:
                 receivedAcknowledgements.enqueue(PacketContainer(packet, host))
-            case .binary, .string:
+            case .binary, .string, .noconnection:
                 handleDataPacket(packet, host)
             default:
                 break
@@ -246,7 +246,7 @@ public class RubegSocket {
     }
 
     private func handleDataPacket(_ packet: Packet, _ host: Host) {
-        guard [.string, .binary].contains(packet.headers.contentType) else {
+        guard [.string, .binary, .noconnection].contains(packet.headers.contentType) else {
             return
         }
 
@@ -282,7 +282,7 @@ public class RubegSocket {
                 return
             }
 
-            if packet.headers.contentType == .string {
+            if [.string, .noconnection].contains(packet.headers.contentType) {
                 guard let text = String(bytes: message, encoding: .utf8) else {
                     return
                 }
