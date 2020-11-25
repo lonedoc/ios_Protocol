@@ -86,7 +86,7 @@ public class RubegSocket {
     public func send(
         message: String,
         token: String?,
-        to host: Host,
+        to address: InetAddress,
         complete: @escaping (Bool) -> Void
     ) {
         if !started {
@@ -100,7 +100,7 @@ public class RubegSocket {
                 data: data,
                 token: token,
                 contentType: .string,
-                host: host,
+                address: address,
                 complete: complete
             )
         }
@@ -109,7 +109,7 @@ public class RubegSocket {
     public func send(
         message: [Byte],
         token: String?,
-        to host: Host,
+        to address: InetAddress,
         progress: ((Int) -> Void)? = nil,
         complete: @escaping (Bool) -> Void
     ) {
@@ -122,7 +122,7 @@ public class RubegSocket {
                 data: message,
                 token: token,
                 contentType: .string,
-                host: host,
+                address: address,
                 progress: progress,
                 complete: complete
             )
@@ -133,7 +133,7 @@ public class RubegSocket {
         data: [Byte],
         token: String?,
         contentType: ContentType,
-        host: Host,
+        address: InetAddress,
         progress: ((Int) -> Void)? = nil,
         complete: @escaping (Bool) -> Void
     ) {
@@ -177,7 +177,7 @@ public class RubegSocket {
 
             let packet = Packet(data: chunk, headers: headers)
 
-            transmission.add(packet: PacketContainer(packet, host))
+            transmission.add(packet: PacketContainer(packet, address))
 
             packetNumber += 1
             leftBound = rightBound
@@ -208,13 +208,13 @@ public class RubegSocket {
         }
     }
 
-    private func readPacket() -> (Packet, Host)? {
+    private func readPacket() -> (Packet, InetAddress)? {
         guard let socket = socket else {
             return nil
         }
 
         var data = Data()
-        var host: Host
+        var address: InetAddress
 
         do {
             let (count, addressOpt) = try socket.readDatagram(into: &data)
@@ -223,18 +223,15 @@ public class RubegSocket {
                 return nil
             }
 
-            guard let address = addressOpt else {
+            guard let addr = addressOpt else {
                 return nil
             }
 
-            guard let hostnameAndPort = Socket.hostnameAndPort(from: address) else {
+            guard let hostnameAndPort = Socket.hostnameAndPort(from: addr) else {
                 return nil
             }
 
-            host = (
-                address: hostnameAndPort.hostname,
-                port: hostnameAndPort.port
-            )
+            address = try InetAddress.create(ip: hostnameAndPort.hostname, port: hostnameAndPort.port)
         } catch let error {
             print(error.localizedDescription)
             return nil
@@ -242,16 +239,16 @@ public class RubegSocket {
 
         let packet = Packet(encoded: data)
 
-        return (packet, host)
+        return (packet, address)
     }
 
-    private func handleDataPacket(_ packet: Packet, _ host: Host) {
+    private func handleDataPacket(_ packet: Packet, _ address: InetAddress) {
         guard [.string, .binary, .noconnection].contains(packet.headers.contentType) else {
             return
         }
 
         let acknowledgement = Packet.createAcknowledgement(for: packet)
-        acknowledgements.enqueue(PacketContainer(acknowledgement, host))
+        acknowledgements.enqueue(PacketContainer(acknowledgement, address))
 
         let messageNumber = packet.headers.messageNumber
 
@@ -305,7 +302,7 @@ public class RubegSocket {
             var ack = receivedAcknowledgements.dequeue()
 
             while ack != nil {
-                handleAcknowledgement(ack!.packet, host: ack!.host)
+                handleAcknowledgement(ack!.packet, address: ack!.address)
                 ack = receivedAcknowledgements.dequeue()
             }
 
@@ -334,7 +331,7 @@ public class RubegSocket {
         }
     }
 
-    private func handleAcknowledgement(_ acknowledgement: Packet, host: Host) {
+    private func handleAcknowledgement(_ acknowledgement: Packet, address: InetAddress) {
         guard acknowledgement.headers.contentType == .acknowledgement else {
             return
         }
@@ -375,7 +372,7 @@ public class RubegSocket {
     private func retransmitPackets() {
         for index in 0..<congestionWindow.count {
             let packetContainer = congestionWindow[index]
-            
+
             let deadline = packetContainer.lastAttemptTime + .milliseconds(ProtocolConstants.retransmitInterval)
 
             if deadline < .now() {
@@ -387,13 +384,13 @@ public class RubegSocket {
 
                     sendPacket(
                         packetContainer.packet,
-                        to: packetContainer.host,
+                        to: packetContainer.address,
                         logPrefix: prefix
                     )
-                    
+
                     congestionWindow[index].lastAttemptTime = .now()
                 }
-                
+
                 congestionWindow[index].attemptsCount += 1
             }
         }
@@ -456,13 +453,13 @@ public class RubegSocket {
         sendPacket(packet, to: host, logPrefix: "-> ")
     }
 
-    private func sendPacket(_ packet: Packet, to host: Host, logPrefix: String) {
+    private func sendPacket(_ packet: Packet, to address: InetAddress, logPrefix: String) {
         guard let socket = socket else {
             return
         }
 
         guard let address =
-            Socket.createAddress(for: host.address, on: host.port)
+            Socket.createAddress(for: address.ip, on: address.port)
         else {
             return
         }

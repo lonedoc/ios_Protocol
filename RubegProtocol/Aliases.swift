@@ -10,11 +10,6 @@ import Foundation
 
 public typealias Byte = UInt8
 
-public typealias Host = (
-    address: String,
-    port: Int32
-)
-
 public typealias Count = (
     incoming: Int64,
     outgoing: Int64
@@ -22,12 +17,12 @@ public typealias Count = (
 
 typealias PacketContainer = (
     packet: Packet,
-    host: Host
+    address: InetAddress
 )
 
 typealias PacketContainerExtended = (
     packet: Packet,
-    host: Host,
+    address: InetAddress,
     lastAttemptTime: DispatchTime,
     attemptsCount: Int
 )
