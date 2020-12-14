@@ -40,6 +40,10 @@ public class RubegSocket {
     public weak var delegate: RubegSocketDelegate?
     @Atomic private(set) var started = false
 
+    public var opened: Bool {
+        return started
+    }
+
     public init() { }
 
     public init(count: Count) {
