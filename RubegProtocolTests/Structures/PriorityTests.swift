@@ -9,6 +9,7 @@
 import XCTest
 @testable import RubegProtocol
 
+// swiftlint:disable function_body_length
 class PriorityTests: XCTestCase {
     func testThatComparisonOperatorsWorksCorrectly() {
         XCTAssertTrue(Priority.low == Priority.low)

@@ -46,6 +46,7 @@
 		5CAED74E23ACB13A00DE17EF /* PriorityQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */; };
 		5CAED75023B0645600DE17EF /* IncomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */; };
 		5CAED75223B065D700DE17EF /* OutcomingTransmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */; };
+		5CCCA70E25E6705B00E8C36E /* SynchronizedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCCA70D25E6705B00E8C36E /* SynchronizedSet.swift */; };
 		5CCCF7B6256E438400A021EF /* InetAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCCF7B5256E438400A021EF /* InetAddress.swift */; };
 		5CCDF683242DE26A00C7A2B3 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */; };
 		5CCDF687242DEDAE00C7A2B3 /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */; };
@@ -112,6 +113,7 @@
 		5CAED74D23ACB13A00DE17EF /* PriorityQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueueTests.swift; sourceTree = "<group>"; };
 		5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingTransmissionTests.swift; sourceTree = "<group>"; };
 		5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomingTransmissionTests.swift; sourceTree = "<group>"; };
+		5CCCA70D25E6705B00E8C36E /* SynchronizedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedSet.swift; sourceTree = "<group>"; };
 		5CCCF7B5256E438400A021EF /* InetAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InetAddress.swift; sourceTree = "<group>"; };
 		5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		5CCDF686242DEDAE00C7A2B3 /* LinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedListTests.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				5C10368B23C17F7C008D31EF /* SynchronizedArray.swift */,
 				5CCDF682242DE26A00C7A2B3 /* LinkedList.swift */,
 				5C5843AA25482CA600378AAC /* Queue.swift */,
+				5CCCA70D25E6705B00E8C36E /* SynchronizedSet.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				5C242BC9254ABAFC001BAF99 /* Synchronizer.swift in Sources */,
 				5CE420B023A22B6D00938B93 /* ByteBuffer.swift in Sources */,
 				5CAED74623AC8B2500DE17EF /* PriorityQueue.swift in Sources */,
+				5CCCA70E25E6705B00E8C36E /* SynchronizedSet.swift in Sources */,
 				5CE420B723A22FFF00938B93 /* Int32+ByteArrayConversion.swift in Sources */,
 				5CAED74223AB6DB900DE17EF /* OutgoingTransmission.swift in Sources */,
 				5CAED74423AB6DC500DE17EF /* IncomingTransmission.swift in Sources */,

@@ -10,7 +10,12 @@ import Foundation
 
 class SynchronizedArray<T> {
     private var items = [T]()
-    private let lockQueue = DispatchQueue(label: "rubeg_protocol.sync_array", qos: .default, attributes: .concurrent)
+
+    private let lockQueue = DispatchQueue(
+        label: "rubeg_protocol.sync_array",
+        qos: .default,
+        attributes: .concurrent
+    )
 
     func append(_ item: T) {
         lockQueue.sync {

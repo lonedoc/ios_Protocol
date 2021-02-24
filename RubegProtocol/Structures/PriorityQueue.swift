@@ -16,7 +16,11 @@ class PriorityQueue<T> {
     private var mediumPriorityItems = LinkedList<T>()
     private var highPriorityItems = LinkedList<T>()
 
-    private let lockQueue = DispatchQueue(label: "rubeg_protocol.priority_queue", qos: .default, attributes: .concurrent)
+    private let lockQueue = DispatchQueue(
+        label: "rubeg_protocol.priority_queue",
+        qos: .default,
+        attributes: .concurrent
+    )
 
     var count: Int {
         return lockQueue.sync(flags: .barrier) {

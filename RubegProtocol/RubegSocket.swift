@@ -14,10 +14,8 @@ private let receivingQueueId = ""
 private let splittingQueueId = ""
 private let callbackQueueId = ""
 
+// swiftlint:disable type_body_length file_length
 public class RubegSocket {
-    private var incomingMessagesCount: Int64 = 0
-    private var outgoingMessagesCount: Int64 = 0
-
     private var incomingTransmissions = [Int64: IncomingTransmission]()
     private var outgoingTransmissions = Queue<OutgoingTransmission>()
     private var outgoingTransmission: OutgoingTransmission?
@@ -31,6 +29,8 @@ public class RubegSocket {
     private let receivingQueue = DispatchQueue(label: receivingQueueId)
     private let callbackQueue = DispatchQueue(label: callbackQueueId)
 
+    private let currentMessageNumbers = SynchronizedSet<Int64>()
+
     private let splittingQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
@@ -42,17 +42,6 @@ public class RubegSocket {
 
     public var opened: Bool {
         return started
-    }
-
-    public init() { }
-
-    public init(count: Count) {
-        incomingMessagesCount = count.incoming
-        outgoingMessagesCount = count.outgoing
-    }
-
-    public var session: Count {
-        return (incomingMessagesCount, outgoingMessagesCount)
     }
 
     public func open() throws {
@@ -74,9 +63,7 @@ public class RubegSocket {
     }
 
     public func reset() {
-        incomingMessagesCount = 0
-        outgoingMessagesCount = 0
-
+        currentMessageNumbers.removeAll()
         incomingTransmissions.removeAll()
         outgoingTransmissions.clear()
         outgoingTransmission = nil
@@ -141,8 +128,11 @@ public class RubegSocket {
         progress: ((Int) -> Void)? = nil,
         complete: @escaping (Bool) -> Void
     ) {
-        outgoingMessagesCount += 1
-        let messageNumber = outgoingMessagesCount
+        var messageNumber = Int64.random(in: 0...Int64.max)
+        while currentMessageNumbers.contains(messageNumber) {
+            messageNumber = Int64.random(in: 0...Int64.max)
+        }
+        _ = currentMessageNumbers.insert(messageNumber)
 
         var packetsCount = data.count / ProtocolConstants.packetSize
         if data.count % ProtocolConstants.packetSize != 0 {
@@ -197,7 +187,9 @@ public class RubegSocket {
 
             let (packet, host) = read
 
-            print("<- \(packet)")
+            #if DEBUG
+                print("<- \(packet)")
+            #endif
 
             switch packet.headers.contentType {
             case .acknowledgement:
@@ -256,20 +248,15 @@ public class RubegSocket {
 
         let messageNumber = packet.headers.messageNumber
 
-        let isObsolete = messageNumber <= incomingMessagesCount && messageNumber != 0
+        let isObsolete = !currentMessageNumbers.contains(messageNumber)
         let isPending = incomingTransmissions[messageNumber] != nil
 
         if isObsolete && !isPending {
             return
         }
 
-        if messageNumber > incomingMessagesCount {
-            incomingMessagesCount = messageNumber
-        }
-
         if incomingTransmissions[messageNumber] == nil {
-            incomingTransmissions[messageNumber] =
-                IncomingTransmission(packet: packet)
+            incomingTransmissions[messageNumber] = IncomingTransmission()
         }
 
         guard let transmission = incomingTransmissions[messageNumber] else {
@@ -317,7 +304,7 @@ public class RubegSocket {
 
         splittingQueue.cancelAllOperations()
 
-        if let ot = outgoingTransmission {
+        if let ot = outgoingTransmission { // swiftlint:disable:this identifier_name
             callbackQueue.async {
                 ot.onComplete(false)
             }
@@ -417,6 +404,10 @@ public class RubegSocket {
             }
         }
 
+        for num in failedMessageNumbers {
+            _ = currentMessageNumbers.remove(num)
+        }
+
         guard let currentTransmission = outgoingTransmission else {
             return
         }
@@ -471,7 +462,9 @@ public class RubegSocket {
         do {
             try socket.write(from: packet.encode(), to: address)
 
-            print("\(logPrefix)\(packet)")
+            #if DEBUG
+                print("\(logPrefix)\(packet)")
+            #endif
         } catch let error {
             print(error.localizedDescription)
         }
