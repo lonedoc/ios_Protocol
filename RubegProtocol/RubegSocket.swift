@@ -92,7 +92,7 @@ public class RubegSocket {
             self.send(
                 data: data,
                 token: token,
-                contentType: .string,
+                contentType: .noconnection,
                 address: address,
                 complete: complete
             )
@@ -114,7 +114,7 @@ public class RubegSocket {
             self.send(
                 data: message,
                 token: token,
-                contentType: .string,
+                contentType: .binary,
                 address: address,
                 progress: progress,
                 complete: complete
