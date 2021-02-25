@@ -37,6 +37,8 @@ public class RubegSocket {
         return queue
     }()
 
+    private let dropUnexpected: Bool
+
     public weak var delegate: RubegSocketDelegate?
     @Atomic private(set) var started = false
 
@@ -44,7 +46,9 @@ public class RubegSocket {
         return started
     }
 
-    public init() {}
+    public init(dropUnexpected: Bool = true) {
+        self.dropUnexpected = dropUnexpected
+    }
 
     public func open() throws {
         if started {
@@ -250,7 +254,7 @@ public class RubegSocket {
 
         let messageNumber = packet.headers.messageNumber
 
-        let isObsolete = !currentMessageNumbers.contains(messageNumber)
+        let isObsolete = dropUnexpected && !currentMessageNumbers.contains(messageNumber)
         let isPending = incomingTransmissions[messageNumber] != nil
 
         if isObsolete && !isPending {
