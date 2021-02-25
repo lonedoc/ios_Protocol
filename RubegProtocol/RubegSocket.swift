@@ -44,6 +44,8 @@ public class RubegSocket {
         return started
     }
 
+    public init() {}
+
     public func open() throws {
         if started {
             return
@@ -470,3 +472,4 @@ public class RubegSocket {
         }
     }
 }
+
