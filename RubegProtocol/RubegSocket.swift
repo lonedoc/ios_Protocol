@@ -254,7 +254,7 @@ public class RubegSocket {
 
         let messageNumber = packet.headers.messageNumber
 
-        let isObsolete = dropUnexpected && !currentMessageNumbers.contains(messageNumber)
+        let isObsolete = dropUnexpected && !currentMessageNumbers.contains(messageNumber) && messageNumber != 0
         let isPending = incomingTransmissions[messageNumber] != nil
 
         if isObsolete && !isPending {

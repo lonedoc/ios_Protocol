@@ -12,7 +12,7 @@ class ProtocolConstants {
     static let packetSize = 960
     static let messageDropInterval = 30_000
     static let congestionWindowSize = 64
-    static let retransmitInterval = 3_000
-    static let maxAttemptCount = 6
+    static let retransmitInterval = 2_000
+    static let maxAttemptCount = 3
     static let sleepInterval: UInt32 = 100
 }
