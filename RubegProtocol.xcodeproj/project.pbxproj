@@ -16,6 +16,7 @@
 		5C5843A52548194000378AAC /* ProtocolConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5843A42548194000378AAC /* ProtocolConstants.swift */; };
 		5C5843AB25482CA600378AAC /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5843AA25482CA600378AAC /* Queue.swift */; };
 		5C5843AF25482EA400378AAC /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5843AE25482EA400378AAC /* Atomic.swift */; };
+		5CA8463928F3C85A003F863B /* InetAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8463828F3C85A003F863B /* InetAddressTests.swift */; };
 		5CAED70B23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */; };
 		5CAED70D23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */; };
 		5CAED70F23A3495D00DE17EF /* ConversionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAED70E23A3495D00DE17EF /* ConversionError.swift */; };
@@ -82,6 +83,7 @@
 		5C5843A42548194000378AAC /* ProtocolConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolConstants.swift; sourceTree = "<group>"; };
 		5C5843AA25482CA600378AAC /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		5C5843AE25482EA400378AAC /* Atomic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		5CA8463828F3C85A003F863B /* InetAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InetAddressTests.swift; sourceTree = "<group>"; };
 		5CAED70A23A33ED400DE17EF /* UnsignedInteger+ByteArrayConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+ByteArrayConversionTests.swift"; sourceTree = "<group>"; };
 		5CAED70C23A341D900DE17EF /* UnsignedInteger+ByteArrayConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnsignedInteger+ByteArrayConversion.swift"; sourceTree = "<group>"; };
 		5CAED70E23A3495D00DE17EF /* ConversionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionError.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				5CAED73D23A9E75B00DE17EF /* PacketTests.swift */,
 				5CAED74F23B0645600DE17EF /* IncomingTransmissionTests.swift */,
 				5CAED75123B065D700DE17EF /* OutcomingTransmissionTests.swift */,
+				5CA8463828F3C85A003F863B /* InetAddressTests.swift */,
 			);
 			path = RubegProtocolTests;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				5CAED73E23A9E75B00DE17EF /* PacketTests.swift in Sources */,
 				5CAED73623A8C06B00DE17EF /* HeadersBuilderTests.swift in Sources */,
 				5CAED74E23ACB13A00DE17EF /* PriorityQueueTests.swift in Sources */,
+				5CA8463928F3C85A003F863B /* InetAddressTests.swift in Sources */,
 				5CAED72423A8B25D00DE17EF /* CoderTests.swift in Sources */,
 				5CAED71923A3878500DE17EF /* Int16+ByteArrayConversionTests.swift in Sources */,
 				5CAED72E23A8BD2000DE17EF /* HeadersTests.swift in Sources */,
@@ -681,6 +685,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = TZX223S8SD;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -694,6 +699,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.rubeg38.RubegProtocol;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -710,6 +716,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = TZX223S8SD;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -723,6 +730,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.rubeg38.RubegProtocol;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
